@@ -1,5 +1,5 @@
-compile = ["make", "-s"]
-run = "./main"
+compile = ["clang practice.c"]
+run = "./a.out"
 entrypoint = "main.c"
 hidden = ["main", "main-debug", "**/*.o", "**/*.d", ".ccls-cache", "Makefile"]
 
@@ -63,3 +63,8 @@ pattern = "**/*.{c,h}"
 
 [languages.c.languageServer]
 start = "ccls"
+
+[nix]
+
+[nix.channel]
+channel = "stable-22_05"
