@@ -1,1 +1,1 @@
-run = "clang ./Semester3/cproject/Lab_Report_1.c && ./a.out"
+run = "clang ./practice.c && ./a.out"
