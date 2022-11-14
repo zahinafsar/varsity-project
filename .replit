@@ -1,1 +1,1 @@
-run = "clang ./practice.c && ./a.out"
+run = "clang -Wno-everything ./practice.c && ./a.out"
