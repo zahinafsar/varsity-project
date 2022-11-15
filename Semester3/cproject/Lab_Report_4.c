@@ -9,6 +9,43 @@ struct node {
 
 struct node * head = NULL;
 
+void display() {
+  struct node * temp = head;
+
+  while (temp != NULL) {
+    printf("%d  ", temp -> data);
+    temp = temp -> next;
+  }
+}
+
+int getData() {
+  int data;
+  printf("\n\nEnter Data: ");
+  scanf("%d", & data);
+
+  return data;
+}
+
+int getPosition() {
+  int position;
+  printf("\nEnter Position: ");
+  scanf("%d", & position);
+
+  return position;
+}
+
+int sizeOfList() {
+  struct node * temp = head;
+  int count = 0;
+
+  while (temp != NULL) {
+    count += 1;
+    temp = temp -> next;
+  }
+
+  return count;
+}
+
 struct node * create_node(int data) {
   struct node * new_node = (struct node * ) malloc(sizeof(struct node));
 
@@ -18,6 +55,7 @@ struct node * create_node(int data) {
     new_node -> prev = NULL;
     new_node -> data = data;
     new_node -> next = NULL;
+    return new_node;
   }
 }
 
@@ -43,7 +81,7 @@ void insertAtEnd(int data) {
     struct node * temp = head;
 
     while (temp -> next != NULL) {
-      temp = temp = temp -> next;
+      temp = temp -> next;
     }
     temp -> next = new_node;
     new_node -> prev = temp;
@@ -158,51 +196,10 @@ void deleteFromPosition(int pos) {
   }
 }
 
-void display() {
-  struct node * temp = head;
-
-  while (temp != NULL) {
-    printf("%d  ", temp -> data);
-    temp = temp -> next;
-  }
-  printf("NULL\n");
-}
-
-int getData() {
-  int data;
-  printf("\n\nEnter Data: ");
-  scanf("%d", & data);
-
-  return data;
-}
-
-int getPosition() {
-  int position;
-  printf("\nEnter Position: ");
-  scanf("%d", & position);
-
-  return position;
-}
-
-int sizeOfList() {
-  struct node * temp = head;
-  int count = 0;
-
-  while (temp != NULL) {
-    count += 1;
-    temp = temp -> next;
-  }
-
-  return count;
-}
-
 int main() {
-  char user_active = 'Y';
   int user_choice;
   int data, position;
-
-  while (user_active == 'Y' || user_active == 'y') {
-
+  while (user_choice != 8) {
     printf("\n\n------------------------------\n");
     printf("\n1. Insert node at the beginning");
     printf("\n2. Insert node at the end");
@@ -213,10 +210,8 @@ int main() {
     printf("\n7. Display");
     printf("\n8. Exit");
     printf("\n\n------------------------------\n");
-
     printf("\nEnter your choice: ");
     scanf("%d", & user_choice);
-
     printf("\n------------------------------\n");
     switch (user_choice) {
     case 1:
@@ -224,51 +219,40 @@ int main() {
       data = getData();
       insertAtBeginning(data);
       break;
-
     case 2:
       printf("\nInserting a node at end");
       data = getData();
       insertAtEnd(data);
       break;
-
     case 3:
       printf("\nInserting a node at the given position");
       data = getData();
       position = getPosition();
       insertAtPosition(data, position);
       break;
-
     case 4:
       printf("\nDeleting a node from beginning\n");
       deleteFromBeginning();
       break;
-
     case 5:
       printf("\nDeleting a node from end\n");
       deleteFromEnd();
       break;
-
     case 6:
       printf("\nDelete a node from given position\n");
       position = getPosition();
       deleteFromPosition(position);
       break;
-
     case 7:
       printf("\nPrint display\n\n");
       display();
       break;
     case 8:
-      printf("\nProgram was terminated\n\n");
-      return 0;
+      printf("\nExit\n\n");
+      break;
     default:
-      printf("\n\tInvalid Choice\n");
+      break;
     }
-
-    printf("\n...............................\n");
-    printf("\nDo u want to continue? (Y/N) : ");
-    fflush(stdin);
-    scanf(" %c", & user_active);
   }
 
   return 0;
