@@ -1,6 +1,20 @@
 {
     "configurations": [
         {
+            "type": "java",
+            "name": "Palindrome",
+            "request": "launch",
+            "mainClass": "Semester4.java.oop_assignment.Palindrome",
+            "projectName": "Varsity-Project_261b7ee5"
+        },
+        {
+            "type": "java",
+            "name": "HelloWorld",
+            "request": "launch",
+            "mainClass": "Semester4.java.oop_assignment.HelloWorld",
+            "projectName": "Varsity-Project_261b7ee5"
+        },
+        {
             "name": "C/C++: gcc build and debug active file",
             "type": "cppdbg",
             "request": "launch",
