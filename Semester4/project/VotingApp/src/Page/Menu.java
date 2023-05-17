@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 import Components.CenteredImage;
 import Components.Frame;
 
-public class Menu extends JFrame {
+public class Menu {
 
     public Menu() {
         new Frame();
@@ -20,26 +20,37 @@ public class Menu extends JFrame {
         JPanel menuPanel = new JPanel(new GridLayout(2, 2));
         menuPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
 
-        JPanel button1 = this.createMenuBox("./Assets/image/vote.png", "Start Voting");
+        JPanel button1 = this.createMenuBox("src/Assets/image/vote.png", "Create Event");
         button1.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                try {
-                    new StartVoting();
-                } catch (MalformedURLException e1) {
-                    e1.printStackTrace();
-                }
+                new CreateEvent();
             }
         });
-        JPanel button2 = this.createMenuBox("./Assets/2.png", "Button 2");
+
+        JPanel button2 = this.createMenuBox("src/Assets/image/all.png", "All Event");
         button2.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                new Welcome();
+                new AllEvent();
             }
         });
-        JPanel button3 = this.createMenuBox("./Assets/3.png", "Button 3");
-        JPanel button4 = this.createMenuBox("./Assets/4.png", "Button 4");
+
+        JPanel button3 = this.createMenuBox("src/Assets/image/candidate.png", "Register Candidate");
+        button3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new RegisterCandidate();
+            }
+        });
+
+        JPanel button4 = this.createMenuBox("src/Assets/image/user.png", "Register User");
+        button4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new RegisterUser();
+            }
+        });
 
         menuPanel.add(button1);
         menuPanel.add(button2);
@@ -63,6 +74,7 @@ public class Menu extends JFrame {
         JPanel panel = new CenteredImage(resizedImage);
         panel.setBackground(Color.WHITE);
         JLabel label = new JLabel(title);
+        label.setFont(new Font("Arial", Font.BOLD, 20));
         label.setHorizontalAlignment(JLabel.CENTER);
         cardPanel.add(new JLabel());
         cardPanel.add(panel);

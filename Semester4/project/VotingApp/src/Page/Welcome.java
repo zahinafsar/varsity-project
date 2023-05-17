@@ -22,7 +22,7 @@ public class Welcome {
         JPanel contentPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
 
-        FlowLayout bodLayout = new FlowLayout(FlowLayout.CENTER, 0, 50);
+        FlowLayout bodLayout = new FlowLayout(FlowLayout.CENTER, 10, 50);
         BoxLayout contentLayout = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
         FlowLayout buttonLayout = new FlowLayout(FlowLayout.CENTER, 0, 10);
 
@@ -36,8 +36,8 @@ public class Welcome {
         welcomeLabel.setBorder(new EmptyBorder(0, 0, 50, 0));
 
         // next button
-        JButton nextButton = new Button("Start");
-        nextButton.setMargin(new Insets(40, 20, 40, 20));
+        JButton nextButton = new Button("Open Menu");
+        nextButton.setMargin(new Insets(20, 20, 20, 20));
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

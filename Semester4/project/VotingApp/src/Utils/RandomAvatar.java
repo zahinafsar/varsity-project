@@ -9,6 +9,6 @@ public class RandomAvatar {
         // String avatar = "https://robohash.org/" + Math.random();
         // URL url = new URL(avatar);
         // return url;
-        return "./Assets/" + randomNumber + ".png";
+        return "src/Assets/" + randomNumber + ".png";
     }
 }
