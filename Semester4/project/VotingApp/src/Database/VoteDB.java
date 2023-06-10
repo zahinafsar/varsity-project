@@ -4,10 +4,10 @@ import Model.Vote;
 import Model.Voter;
 
 public class VoteDB {
-    public static Vote votes[] = new Vote[100];
     // public static Vote votes[] = {
     // new Vote("1", "1", "1", "1")
     // };
+    public static Vote votes[] = new Vote[100];
     public static int userCount = 0;
     public static int id = 1;
 

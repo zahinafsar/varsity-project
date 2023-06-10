@@ -4,15 +4,18 @@ import Model.Candidate;
 import Utils.RandomAvatar;
 
 public class CandidateDB {
-    // public static Candidate users[] = new Candidate[100];
-    public static Candidate users[] = {
-            new Candidate("1", "Zahin Afsar", "src/Assets/1.png", "23452345"),
-            new Candidate("2", "Nurul Huda", "src/Assets/2.png", "23452345"),
-            new Candidate("3", "Jubayer Al Mamun", "src/Assets/3.png", "23452345"),
-            new Candidate("4", "Shamim", "src/Assets/4.png", "23452345")
-    };
-    public static int userCount = 3;
-    public static int id = 4;
+    // public static Candidate users[] = {
+    // new Candidate("1", "Zahin Afsar", "src/Assets/1.png", "23452345"),
+    // new Candidate("2", "Nurul Huda", "src/Assets/2.png", "23452345"),
+    // new Candidate("3", "Jubayer Al Mamun", "src/Assets/3.png", "23452345"),
+    // new Candidate("4", "Shamim", "src/Assets/4.png", "23452345")
+    // };
+    // public static int userCount = 3;
+    // public static int id = 4;
+
+    public static Candidate users[] = new Candidate[100];
+    public static int userCount = 0;
+    public static int id = 1;
 
     public static void addCandidate(Candidate user) {
         for (int i = 0; i < users.length; i++) {

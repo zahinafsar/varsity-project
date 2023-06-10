@@ -63,7 +63,7 @@ public class CreateEvent {
                 }
 
                 String newId = EventDB.getNextId();
-                Event event = new Event(newId, inputText, null);
+                Event event = new Event(newId, inputText, selectedCandidates);
                 EventDB.addEvent(event);
 
                 new Menu();

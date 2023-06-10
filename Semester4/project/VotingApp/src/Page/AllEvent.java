@@ -70,8 +70,7 @@ public class AllEvent {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        JLabel title = new Label(
-                "Events List");
+        JLabel title = new Label("Events List");
         title.setBorder(new EmptyBorder(10, 10, 20, 10));
         title.setFont(new Font("Arial", Font.BOLD, 25));
         title.setHorizontalAlignment(SwingConstants.CENTER);

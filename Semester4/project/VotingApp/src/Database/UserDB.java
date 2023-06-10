@@ -3,16 +3,19 @@ package Database;
 import Model.Voter;
 
 public class UserDB {
-    // public static Voter users[] = new Voter[100];
-    public static Voter users[] = {
-        new Voter("1", "Rahim", "./", "01234"),
-        new Voter("2", "Sarwar", "./", "34556"),
-        new Voter("3", "Mursalin", "./", "56785"),
-        new Voter("4", "Mostak", "./", "67655"),
-    };
+    // public static Voter users[] = {
+    // new Voter("1", "Rahim", "./", "01234"),
+    // new Voter("2", "Sarwar", "./", "34556"),
+    // new Voter("3", "Mursalin", "./", "56785"),
+    // new Voter("4", "Mostak", "./", "67655"),
+    // };
 
-    public static int userCount = 3;
-    public static int id = 4;
+    // public static int userCount = 3;
+    // public static int id = 4;
+
+    public static Voter users[] = new Voter[100];
+    public static int userCount = 0;
+    public static int id = 1;
 
     public static void addVoter(Voter user) {
         for (int i = 0; i < users.length; i++) {
