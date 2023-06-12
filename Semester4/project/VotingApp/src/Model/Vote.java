@@ -5,13 +5,13 @@ import Database.VoteDB;
 public class Vote {
     private String id;
     private String candidateId;
-    private String voterCode;
+    private String code;
     private String eventId;
 
-    public Vote(String candidateId, String voterCode, String eventId) {
+    public Vote(String candidateId, String code, String eventId) {
         this.id = VoteDB.getNextId();
         this.candidateId = candidateId;
-        this.voterCode = voterCode;
+        this.code = code;
         this.eventId = eventId;
     }
 
@@ -24,7 +24,7 @@ public class Vote {
     }
 
     public String getVoterCode() {
-        return voterCode;
+        return code;
     }
 
     public String getEventId() {
@@ -39,8 +39,8 @@ public class Vote {
         this.candidateId = candidateId;
     }
 
-    public void setVoterCode(String voterCode) {
-        this.voterCode = voterCode;
+    public void setVoterCode(String code) {
+        this.code = code;
     }
 
     public void setEventId(String eventId) {

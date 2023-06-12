@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class RegisterUser {
 
@@ -34,15 +36,7 @@ public class RegisterUser {
         tableModel.addColumn("Phone Number");
         tableModel.addColumn("Voter Code");
 
-        for (int i = 0; i < UserDB.userCount; i++) {
-            Voter user = UserDB.users[i];
-            tableModel.addRow(new Object[] {
-                    user.getId(),
-                    user.getName(),
-                    user.getPhone(),
-                    user.getVoterCode()
-            });
-        }
+        loadData();
 
         table = new JTable(tableModel);
 
@@ -110,6 +104,27 @@ public class RegisterUser {
         frame.setVisible(true);
     }
 
+    private void loadData() {
+        tableModel.setRowCount(0);
+        ResultSet rs = UserDB.getVoters();
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String code = rs.getString("code");
+                tableModel.addRow(new Object[] {
+                        id,
+                        name,
+                        phone,
+                        code
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void addUser() {
         Input Name = new Input();
         Input Phone = new Input();
@@ -129,18 +144,20 @@ public class RegisterUser {
             String newId = UserDB.getNextId();
             Voter user = new Voter(newId, name, "", phone);
             UserDB.addVoter(user);
-
-            Object[] rowData = { newId, name, phone, user.getVoterCode() };
-            tableModel.addRow(rowData);
+            loadData();
         }
     }
 
     private void editSelectedUser() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            String id = (String) tableModel.getValueAt(selectedRow, 0);
-            String name = (String) tableModel.getValueAt(selectedRow, 1);
-            String phone = (String) tableModel.getValueAt(selectedRow, 2);
+            Object idValue = (Integer) tableModel.getValueAt(selectedRow, 0);
+            Object nameValue = tableModel.getValueAt(selectedRow, 1);
+            Object phoneValue = tableModel.getValueAt(selectedRow, 2);
+
+            String id = String.valueOf(idValue);
+            String name = String.valueOf(nameValue);
+            String phone = String.valueOf(phoneValue);
 
             Input NameField = new Input(name);
             Input PhoneField = new Input(phone);
@@ -150,8 +167,8 @@ public class RegisterUser {
                     "Phone Number:", PhoneField,
             };
 
-            int option = JOptionPane.showConfirmDialog(null, message, "Edit User",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int option = JOptionPane.showConfirmDialog(null, message, "Edit User", JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE);
 
             if (option == JOptionPane.OK_OPTION) {
                 String newName = NameField.getText();
@@ -159,8 +176,7 @@ public class RegisterUser {
 
                 UserDB.updateVoter(id, newName, newPhone);
 
-                tableModel.setValueAt(newName, selectedRow, 1);
-                tableModel.setValueAt(newPhone, selectedRow, 2);
+                loadData();
             }
         }
     }
@@ -168,14 +184,15 @@ public class RegisterUser {
     private void deleteSelectedUser() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            String id = (String) tableModel.getValueAt(selectedRow, 0);
+            Object idValue = (Integer) tableModel.getValueAt(selectedRow, 0);
+            String id = String.valueOf(idValue);
             int option = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to delete this user?", "Delete User",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
             if (option == JOptionPane.YES_OPTION) {
                 UserDB.deleteVoter(id);
-                tableModel.removeRow(selectedRow);
+                loadData();
             }
         }
     }

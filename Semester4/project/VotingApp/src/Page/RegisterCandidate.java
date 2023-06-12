@@ -4,6 +4,7 @@ import Components.Frame;
 import Components.Input;
 import Components.Label;
 import Database.CandidateDB;
+import Database.UserDB;
 import Model.Candidate;
 import Components.Button;
 
@@ -13,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class RegisterCandidate {
 
@@ -33,15 +36,7 @@ public class RegisterCandidate {
         tableModel.addColumn("Phone Number");
         tableModel.addColumn("Symbol");
 
-        for (int i = 0; i < CandidateDB.userCount; i++) {
-            Candidate user = CandidateDB.users[i];
-            tableModel.addRow(new Object[] {
-                    user.getId(),
-                    user.getName(),
-                    user.getPhone(),
-                    user.getImage()
-            });
-        }
+        loadData();
 
         table = new JTable(tableModel);
 
@@ -109,6 +104,27 @@ public class RegisterCandidate {
         frame.setVisible(true);
     }
 
+    private void loadData() {
+        tableModel.setRowCount(0);
+        ResultSet rs = CandidateDB.getCandidates();
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String image = rs.getString("image");
+                tableModel.addRow(new Object[] {
+                        id,
+                        name,
+                        phone,
+                        image
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void addCandidate() {
         Input Name = new Input();
         Input Phone = new Input();
@@ -132,18 +148,25 @@ public class RegisterCandidate {
             Candidate user = new Candidate(newId, name, symbol, phone);
             CandidateDB.addCandidate(user);
 
-            Object[] rowData = { newId, name, phone, symbol };
-            tableModel.addRow(rowData);
+            loadData();
+
+            // Object[] rowData = { newId, name, phone, symbol };
+            // tableModel.addRow(rowData);
         }
     }
 
     private void editSelectedCandidate() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            String id = (String) tableModel.getValueAt(selectedRow, 0);
-            String name = (String) tableModel.getValueAt(selectedRow, 1);
-            String phone = (String) tableModel.getValueAt(selectedRow, 2);
-            String symbol = (String) tableModel.getValueAt(selectedRow, 3);
+            Object idValue = (Integer) tableModel.getValueAt(selectedRow, 0);
+            Object nameValue = tableModel.getValueAt(selectedRow, 1);
+            Object phoneValue = tableModel.getValueAt(selectedRow, 2);
+            Object symbolValue = tableModel.getValueAt(selectedRow, 3);
+
+            String id = String.valueOf(idValue);
+            String name = String.valueOf(nameValue);
+            String phone = String.valueOf(phoneValue);
+            String symbol = String.valueOf(symbolValue);
 
             Input NameField = new Input(name);
             Input PhoneField = new Input(phone);
@@ -165,9 +188,10 @@ public class RegisterCandidate {
 
                 CandidateDB.updateCandidate(id, newName, newPhone, newSymbol);
 
-                tableModel.setValueAt(newName, selectedRow, 1);
-                tableModel.setValueAt(newPhone, selectedRow, 2);
-                tableModel.setValueAt(newSymbol, selectedRow, 3);
+                loadData();
+                // tableModel.setValueAt(newName, selectedRow, 1);
+                // tableModel.setValueAt(newPhone, selectedRow, 2);
+                // tableModel.setValueAt(newSymbol, selectedRow, 3);
             }
         }
     }
@@ -182,7 +206,8 @@ public class RegisterCandidate {
 
             if (option == JOptionPane.YES_OPTION) {
                 CandidateDB.deleteCandidate(id);
-                tableModel.removeRow(selectedRow);
+                loadData();
+                // tableModel.removeRow(selectedRow);
             }
         }
     }

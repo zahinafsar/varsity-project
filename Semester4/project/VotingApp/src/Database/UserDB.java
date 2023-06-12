@@ -1,6 +1,12 @@
 package Database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import Model.Voter;
+import Utils.Database;
 
 public class UserDB {
     // public static Voter users[] = {
@@ -17,14 +23,30 @@ public class UserDB {
     public static int userCount = 0;
     public static int id = 1;
 
+    public static ResultSet getVoters() {
+        Connection con = Database.getConnection();
+        try {
+            String sql = "select * from users";
+            PreparedStatement p = con.prepareStatement(sql);
+            ResultSet rs = p.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public static void addVoter(Voter user) {
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] == null) {
-                users[i] = user;
-                userCount++;
-                id++;
-                break;
-            }
+        Connection con = Database.getConnection();
+        try {
+            String sql = "insert into users(name, phone, code) values(?, ?, ?)";
+            PreparedStatement p = con.prepareStatement(sql);
+            p.setString(1, user.getName());
+            p.setString(2, user.getPhone());
+            p.setString(3, user.getVoterCode());
+            p.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -33,25 +55,28 @@ public class UserDB {
     }
 
     public static void updateVoter(String id, String name, String phone) {
-        for (int i = 0; i < users.length; i++) {
-            if (users[i].getId().equals(id)) {
-                users[i].setName(name);
-                users[i].setPhone(phone);
-                break;
-            }
+        Connection con = Database.getConnection();
+        try {
+            String sql = "UPDATE users SET name = ?, phone = ? WHERE id = ?";
+            PreparedStatement p = con.prepareStatement(sql);
+            p.setString(1, name);
+            p.setString(2, phone);
+            p.setInt(3, Integer.parseInt(id));
+            p.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 
     public static void deleteVoter(String id) {
-        for (int i = 0; i < users.length; i++) {
-            if (users[i].getId().equals(id)) {
-                users[i] = null;
-                userCount--;
-                for (int j = i; j < users.length - 1; j++) {
-                    users[j] = users[j + 1];
-                }
-                break;
-            }
+        Connection con = Database.getConnection();
+        try {
+            String sql = "DELETE FROM users WHERE id = ?";
+            PreparedStatement p = con.prepareStatement(sql);
+            p.setInt(1, Integer.parseInt(id));
+            p.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 }

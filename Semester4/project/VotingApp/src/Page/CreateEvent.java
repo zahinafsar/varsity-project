@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class CreateEvent {
     private JTextField inputField;
@@ -34,13 +36,14 @@ public class CreateEvent {
         tableModel.addColumn("Id");
         tableModel.addColumn("Name");
 
-        for (int i = 0; i < CandidateDB.userCount; i++) {
-            Candidate user = CandidateDB.users[i];
-            tableModel.addRow(new Object[] {
-                    user.getId(),
-                    user.getName()
-            });
-        }
+        // for (int i = 0; i < CandidateDB.userCount; i++) {
+        //     Candidate user = CandidateDB.users[i];
+        //     tableModel.addRow(new Object[] {
+        //             user.getId(),
+        //             user.getName()
+        //     });
+        // }
+        loadCandidates();
 
         JLabel tableLabel = new Label("Select Candidates from the table");
 
@@ -102,5 +105,22 @@ public class CreateEvent {
 
         frame.add(panel);
         frame.setVisible(true);
+    }
+
+    private void loadCandidates() {
+        tableModel.setRowCount(0);
+        ResultSet rs = CandidateDB.getCandidates();
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                tableModel.addRow(new Object[] {
+                        id,
+                        name,
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,6 +3,7 @@ package Page;
 import Components.Button;
 import Components.Input;
 import Components.Table;
+import Database.CandidateDB;
 import Database.EventDB;
 import Model.Candidate;
 import Model.Event;
@@ -16,6 +17,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class AllEvent {
     private JTable table;
@@ -29,13 +32,15 @@ public class AllEvent {
         tableModel.addColumn("Id");
         tableModel.addColumn("Name");
 
-        for (int i = 0; i < EventDB.eventCount; i++) {
-            Event user = EventDB.events[i];
-            tableModel.addRow(new Object[] {
-                    user.getId(),
-                    user.getName()
-            });
-        }
+        // for (int i = 0; i < EventDB.eventCount; i++) {
+        // Event user = EventDB.events[i];
+        // tableModel.addRow(new Object[] {
+        // user.getId(),
+        // user.getName()
+        // });
+        // }
+
+        loadData();
 
         table = new Table(tableModel);
 
@@ -49,7 +54,8 @@ public class AllEvent {
                         JOptionPane.showMessageDialog(frame, "Please select a row");
                         return;
                     } else {
-                        String id = (String) tableModel.getValueAt(selectedRow, 0);
+                        Object idValue = (Integer) tableModel.getValueAt(selectedRow, 0);
+                        String id = String.valueOf(idValue);
                         new StartVoting(id);
                     }
                 } catch (MalformedURLException e1) {
@@ -89,5 +95,22 @@ public class AllEvent {
 
         frame.add(panel);
         frame.setVisible(true);
+    }
+
+    private void loadData() {
+        tableModel.setRowCount(0);
+        ResultSet rs = EventDB.getEvents();
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                tableModel.addRow(new Object[] {
+                        id,
+                        name,
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

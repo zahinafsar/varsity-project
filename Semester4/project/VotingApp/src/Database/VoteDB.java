@@ -11,11 +11,11 @@ public class VoteDB {
     public static int userCount = 0;
     public static int id = 1;
 
-    public static boolean idValidCode(String voterCode) {
+    public static boolean idValidCode(String code) {
         boolean valid = false;
         for (int i = 0; i < UserDB.userCount; i++) {
             Voter user = UserDB.users[i];
-            if (user.getVoterCode().equals(voterCode)) {
+            if (user.getVoterCode().equals(code)) {
                 valid = true;
                 break;
             }
@@ -23,11 +23,11 @@ public class VoteDB {
         return valid;
     }
 
-    public static boolean idValidVote(String voterCode, String eventId) {
+    public static boolean idValidVote(String code, String eventId) {
         boolean valid = true;
         for (int i = 0; i < votes.length; i++) {
             if (votes[i] != null) {
-                if (votes[i].getVoterCode().equals(voterCode) && votes[i].getEventId().equals(eventId)) {
+                if (votes[i].getVoterCode().equals(code) && votes[i].getEventId().equals(eventId)) {
                     valid = false;
                     break;
                 }
