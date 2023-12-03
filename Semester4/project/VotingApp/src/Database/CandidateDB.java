@@ -1,5 +1,6 @@
 package Database;
 
+import java.security.cert.TrustAnchor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +36,6 @@ public class CandidateDB {
         }
         return null;
     }
-    
 
     public static void addCandidate(Candidate user) {
         // for (int i = 0; i < users.length; i++) {
@@ -57,6 +57,32 @@ public class CandidateDB {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public static boolean isValidSymbol(String image) {
+        boolean valid = false;
+        for (int index = 1; index <= 25; index++) {
+            if (image.equals(Integer.toString(index))) {
+                valid = true;
+                break;
+            }
+        }
+        return valid;
+    }
+
+    public static boolean isOpenSymbol(String image) {
+        boolean valid = true;
+        Connection con = Database.getConnection();
+        try {
+            String sql = "select * from candidates where image = ?";
+            PreparedStatement p = con.prepareStatement(sql);
+            p.setString(1, image);
+            p.executeQuery();
+            valid = !p.getResultSet().next();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return valid;
     }
 
     public static String getNextId() {

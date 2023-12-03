@@ -29,30 +29,20 @@ public class CreateEvent {
 
         JLabel inputLabel = new Label("Set Event Name :");
 
-        // Input Field
         inputField = new Input();
-        // Table Model
+
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Id");
         tableModel.addColumn("Name");
 
-        // for (int i = 0; i < CandidateDB.userCount; i++) {
-        //     Candidate user = CandidateDB.users[i];
-        //     tableModel.addRow(new Object[] {
-        //             user.getId(),
-        //             user.getName()
-        //     });
-        // }
         loadCandidates();
 
         JLabel tableLabel = new Label("Select Candidates from the table");
 
-        // Multi-Select Table
         multiSelectTable = new Table(tableModel);
         multiSelectTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         multiSelectTable.setFillsViewportHeight(true);
 
-        // Button
         Button submitButton = new Button("Submit");
         submitButton.addActionListener(new ActionListener() {
             @Override
@@ -81,7 +71,6 @@ public class CreateEvent {
             }
         });
 
-        // Panel
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 

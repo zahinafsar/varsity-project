@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Controller",
+            "request": "launch",
+            "mainClass": "com.app.wrapup.Controller",
+            "projectName": "wrapup"
+        },
+        {
+            "type": "java",
+            "name": "WrapupApplication",
+            "request": "launch",
+            "mainClass": "wrapup.WrapupApplication",
+            "projectName": "wrapup"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-WrapupApplication<wrapup>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.app.wrapup.WrapupApplication",
+            "projectName": "wrapup",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-WrapupApplication<wrapup>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.wrapup.wrapup.WrapupApplication",
+            "projectName": "wrapup",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

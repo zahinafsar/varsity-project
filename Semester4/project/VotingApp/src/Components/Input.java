@@ -11,5 +11,6 @@ public class Input extends JTextField {
     public Input() {
         super(20);
         super.setBorder(new EmptyBorder(12, 12, 12, 12));
+        
     }
 }

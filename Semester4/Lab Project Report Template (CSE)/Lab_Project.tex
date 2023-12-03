@@ -1,0 +1,269 @@
+\documentclass[12pt]{report}
+\usepackage[a4paper, left=3.17cm, right=3.17cm, top=2.54cm, bottom=2.54cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{chemformula}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tabularx,booktabs}
+\newcolumntype{C}{>{\centering\arraybackslash}X} % centered version of "X" type
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{comment}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{cite}
+\usepackage[colorlinks, linkcolor=black, anchorcolor=black, citecolor=black]{hyperref}
+\usepackage{graphicx}
+\setlength{\parskip}{0.5em}
+\title{Place Your Project Title at Here}
+%\author{\textup{Qi YUAN}}
+
+
+%copyright at footer
+\usepackage{fancyhdr}
+\fancyhf{}
+\rfoot{%
+  \footnotesize
+  \textcopyright~Dept. of Computer Science and Engineering, GUB\\
+
+ }
+%\pagestyle{fancy}
+
+
+\begin{document}
+    \input{title/title.tex}
+    \tableofcontents
+  
+
+
+% Chapter 1 starting here.....    
+\newpage
+\chapter{Introduction}
+
+\section{Overview}
+Start the section with a general discussion of the project, that is, an overview.
+
+\section{Motivation}
+Write this section mentioning actually why you have decided to choose this project \cite{farokhzad2009impact}.
+
+\section{Problem Definition}
+
+\subsection{Problem Statement}
+Here you will describe the statement that you want to address as your problem. This will definitely contain discussion according to your above motivation.
+
+\subsection{Complex Engineering Problem}
+The following Table \ref{tab:CEP} must be completed according to your above discussion in detail. The column on the right side should be filled only on the attributes you have chosen to be touched by your own project.
+
+
+\begin{table}[htbp]
+   \centering
+    \caption{Summary of the attributes touched by the mentioned projects}
+    \begin{tabular}{|p{6.0 cm}|p{8 cm}|}
+    %\rowcolor{gray!30}
+    \toprule
+        \textbf{Name of the P Attributess} & \textbf{Explain how to address}  \\
+        \midrule
+
+    \textbf{P1:} Depth of knowledge required  &  ---- \\
+      \hline
+       
+    \textbf{P2:} Range of conflicting
+     requirements  &  ---- \\
+      \hline
+
+    \textbf{P3:} Depth of analysis required  &  ---- \\
+    \hline
+    
+    \textbf{P4:} Familiarity of issues  &  ---- \\ 
+    \hline
+    \textbf{P5:} Extent of applicable codes  &  ---- \\
+      \hline
+       
+    \textbf{P6:} Extent of stakeholder
+     involvement and conflicting
+     requirements  &  ---- \\
+      \hline
+
+    \textbf{P7:} Interdependence  &  ---- \\
+    \hline
+        
+    \end{tabular}
+    \label{tab:CEP}
+\end{table}
+
+\section{Design Goals/Objectives}
+Specify and discuss the goals or objectives of your project.
+
+\section{Application}
+Write about the exact application of your chosen project in the real world in details.\\In every section please add subsections and figures and citations as references\cite{farokhzad2009impact} also.
+
+% Chapter 1 ends here.....    
+
+
+
+
+% Chapter 2 starting here.....    
+\newpage
+\chapter{Design/Development/Implementation of the Project}
+
+\section{Introduction}
+Start the section with a general discussion of the project  \cite{sivarajah2017critical} \cite{laney20013d} \cite{WinNT}. 
+
+\section{Project Details}
+In this section, you will elaborate on all the details of your project, using subsections if necessary.
+
+\subsection{Subsection\_name}
+
+
+\begin{figure}[h]
+        \begin{center}
+         \includegraphics[scale=0.9]{Figures/a1.jpg}
+        \end{center}
+        \caption{Figure name}
+     \end{figure}
+
+     
+You can fix the height, width, position, etc., of the figure accordingly.
+
+\section{Implementation}
+All the implementation details of your project should be included in this section, along with many subsections.
+
+\subsection{Subsection\_name}
+This is just a sample subsection. Subsections should be written in detail. Subsections may include the following, in addition to others from your own project.
+
+
+\subsubsection{The workflow}
+
+\subsubsection{Tools and libraries}
+
+\subsubsection{Implementation details (with screenshots and programming codes)}
+
+Each subsection may also include subsubsections.
+
+
+\section{Algorithms}
+The algorithms and the programming codes in detail should be included .\\Pseudo-codes are also encouraged very much to be included in this chapter for your project.
+
+\begin{itemize}
+    \item Bullet points can also be included anywhere in this project report.
+\end{itemize}
+
+
+\SetKwInput{KwInput}{Input}                % Set the Input
+\SetKwInput{KwOutput}{Output} 
+\begin{algorithm}[H]
+\DontPrintSemicolon
+  
+  \KwInput{Your Input}
+  \KwOutput{Your output}
+  \KwData{Testing set $x$}
+  $\sum_{i=1}^{\infty} := 0$ \tcp*{this is a comment}
+  \tcc{Now this is an if...else conditional loop}
+  \If{Condition 1}
+    {
+        Do something    \tcp*{this is another comment}
+        \If{sub-Condition}
+        {Do a lot}
+    }
+    \ElseIf{Condition 2}
+    {
+    	Do Otherwise \;
+        \tcc{Now this is a for loop}
+        \For{sequence}    
+        { 
+        	loop instructions
+        }
+    }
+    \Else
+    {
+    	Do the rest
+    }
+    
+    \tcc{Now this is a While loop}
+   \While{Condition}
+   {
+   		Do something\;
+   }
+
+\caption{Sample Algorithm}
+\end{algorithm}
+
+
+% Chapter 2 ends here..... 
+
+
+
+
+
+
+
+
+% Chapter 3 starting here..... 
+\newpage
+\chapter{Performance Evaluation}
+
+\section{Simulation Environment/ Simulation Procedure}
+Discuss the experimental setup and environment installation needed for the simulation of your outcomes.
+
+\subsection{Subsection}
+\subsection{Subsection}
+
+\section{Results Analysis/Testing}
+
+Discussion about your various results should be included in this chapter in detail.
+\subsection{Result\_portion\_1}
+The results of any specific part of your project can be included using subsections.
+
+\subsection{Result\_portion\_2}
+Each result must include screenshots from your project. In addition to screenshots, graphs should be added accordingly to your project.
+
+\begin{figure}[thbp]
+        \begin{center}
+         \includegraphics[width=0.5\textwidth]{Figures/basic-bar-graph.png}
+        \end{center}
+        \caption{A graphical result of your project}
+     \end{figure}
+
+\subsection{Result\_portion\_3}
+Each result must have a single paragraph describing your result screenshots or graphs or others. This is a simple discussion of that particular portion/part of your result.
+
+\section{Results Overall Discussion}
+A general discussion about how your result has arrived should be included in this chapter. Where the problems detected from your results should be included as well.
+
+\subsection{Complex Engineering Problem Discussion}
+[OPTIONAL] In this subsection, if you want, you can discuss in details the attributes that have been touched by your project problem in details. This has already been mentioned in the Table \ref{tab:IC}.
+
+
+% Chapter 3 ends here..... 
+
+
+
+
+% Chapter 5 starts here..... 
+\newpage
+\chapter{Conclusion}
+
+\section{Discussion}
+Discuss the contents of this chapter and summarized the description of the work and the results and observation. Generally, it should be in one paragraph.
+
+
+\section{Limitations}
+Discuss the limitations of the project. Limitations must be discussed, with the help of some critical analysis.
+
+\section{Scope of Future Work}
+Discuss the future work of the project, that is your plans for more work and extension of your project.
+
+% Chapter 5 ends here..... 
+
+
+
+
+% References starts here..... 
+\newpage
+  \renewcommand\bibname{References}
+  \bibliographystyle{unsrt}
+  \bibliography{Ref}
+
+\end{document}

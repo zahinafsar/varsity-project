@@ -133,7 +133,7 @@ public class RegisterCandidate {
         Object[] message = {
                 "Candidate Name:", Name,
                 "Phone Number:", Phone,
-                "Symbol:", Symbol,
+                "Symbol Id (1-25):", Symbol,
         };
 
         int option = JOptionPane.showConfirmDialog(null, message, "Add Candidate",
@@ -144,14 +144,24 @@ public class RegisterCandidate {
             String phone = Phone.getText();
             String symbol = Symbol.getText();
 
+            Boolean isValid = CandidateDB.isValidSymbol(symbol);
+            if (!isValid) {
+                JOptionPane.showMessageDialog(null, "Invalid Symbol Id");
+                return;
+            }
+
+            Boolean isOpen = CandidateDB.isOpenSymbol(symbol);
+            if (!isOpen) {
+                JOptionPane.showMessageDialog(null, "Symbol is not available!");
+                return;
+            }
+
             String newId = CandidateDB.getNextId();
             Candidate user = new Candidate(newId, name, symbol, phone);
             CandidateDB.addCandidate(user);
 
             loadData();
 
-            // Object[] rowData = { newId, name, phone, symbol };
-            // tableModel.addRow(rowData);
         }
     }
 
@@ -189,9 +199,6 @@ public class RegisterCandidate {
                 CandidateDB.updateCandidate(id, newName, newPhone, newSymbol);
 
                 loadData();
-                // tableModel.setValueAt(newName, selectedRow, 1);
-                // tableModel.setValueAt(newPhone, selectedRow, 2);
-                // tableModel.setValueAt(newSymbol, selectedRow, 3);
             }
         }
     }
@@ -199,7 +206,8 @@ public class RegisterCandidate {
     private void deleteSelectedCandidate() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            String id = (String) tableModel.getValueAt(selectedRow, 0);
+            Object idValue = (Integer) tableModel.getValueAt(selectedRow, 0);
+            String id = String.valueOf(idValue);
             int option = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to delete this Candidate?", "Delete Candidate",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -207,7 +215,6 @@ public class RegisterCandidate {
             if (option == JOptionPane.YES_OPTION) {
                 CandidateDB.deleteCandidate(id);
                 loadData();
-                // tableModel.removeRow(selectedRow);
             }
         }
     }

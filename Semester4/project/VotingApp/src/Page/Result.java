@@ -33,9 +33,9 @@ public class Result {
 
         String[] candidates = EventDB.getEvent(id).getCandidates();
         for (int i = 0; i < candidates.length; i++) {
-            String candidateId = candidates[i];
-            int voteCount = VoteDB.getNumberOfVotes(candidateId, id);
-            Candidate candidate = CandidateDB.getCandidate(candidateId);
+            String candidate_id = candidates[i];
+            int voteCount = VoteDB.getNumberOfVotes(candidate_id, id);
+            Candidate candidate = CandidateDB.getCandidate(candidate_id);
             tableModel.addRow(new Object[] {
                     candidate.getName(),
                     voteCount

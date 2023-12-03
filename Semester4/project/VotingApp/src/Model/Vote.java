@@ -4,15 +4,15 @@ import Database.VoteDB;
 
 public class Vote {
     private String id;
-    private String candidateId;
+    private String candidate_id;
     private String code;
-    private String eventId;
+    private String event_id;
 
-    public Vote(String candidateId, String code, String eventId) {
+    public Vote(String candidate_id, String code, String event_id) {
         this.id = VoteDB.getNextId();
-        this.candidateId = candidateId;
+        this.candidate_id = candidate_id;
         this.code = code;
-        this.eventId = eventId;
+        this.event_id = event_id;
     }
 
     public String getId() {
@@ -20,7 +20,7 @@ public class Vote {
     }
 
     public String getCandidateId() {
-        return candidateId;
+        return candidate_id;
     }
 
     public String getVoterCode() {
@@ -28,22 +28,22 @@ public class Vote {
     }
 
     public String getEventId() {
-        return eventId;
+        return event_id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setCandidateId(String candidateId) {
-        this.candidateId = candidateId;
+    public void setCandidateId(String candidate_id) {
+        this.candidate_id = candidate_id;
     }
 
     public void setVoterCode(String code) {
         this.code = code;
     }
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public void setEventId(String event_id) {
+        this.event_id = event_id;
     }
 }

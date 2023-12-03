@@ -58,7 +58,7 @@ public class StartVoting {
         JPanel actionPanel = new JPanel(new FlowLayout());
         JPanel formPanel = new JPanel(new FlowLayout());
 
-        JLabel inputLabel = new JLabel("Voter ID ");
+        JLabel inputLabel = new JLabel("Voter Code ");
         inputLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
         inputLabel.setFont(new Font("Arial", Font.BOLD, 15));
 
@@ -71,7 +71,6 @@ public class StartVoting {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String idInput = textField.getText();
-                System.out.println(idInput);
                 if (selectedCandidateId == "") {
                     JOptionPane.showMessageDialog(frame, "Please select a candidate");
                     return;
@@ -145,7 +144,8 @@ public class StartVoting {
         candidatePanel.setBorder(BorderFactory.createLineBorder(Color.decode("#c1c1c1"), 2));
         JLabel label = new JLabel(candidate.getName());
         label.setHorizontalAlignment(JLabel.CENTER);
-        ImageIcon realImageIcon = new ImageIcon(candidate.getImage());
+        // ImageIcon realImageIcon = new ImageIcon(candidate.getImage());
+        ImageIcon realImageIcon = new ImageIcon("src/Assets/" + candidate.getImage() + ".png");
         Image resizedImageIcon = realImageIcon.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_DEFAULT);
         ImageIcon resizedImage = new ImageIcon(resizedImageIcon);
         JLabel imageLabel = new JLabel(resizedImage);
