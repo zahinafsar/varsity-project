@@ -15,6 +15,6 @@ exports.sendEmail = async ({ subject, availableSeat }) => {
     });
     console.log(`Email sent to ${to}...`);
   } catch (error) {
-    console.log("SendGrid", error);
+    console.log("SendGrid", "Something went wrong while sending email.");
   }
 };

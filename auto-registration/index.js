@@ -4,15 +4,23 @@ const { format } = require("date-fns");
 
 const sections = [
   {
-    course: "Web Programming",
-    section: "213_D5",
+    courseName: "Web Programming",
+    courseId: 448,
+    sectionCode: "213_D5",
     url: "https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=448&versionId=1",
   },
   {
-    course: "Compiler Lab",
-    section: "221_D5",
+    courseName: "Compiler Lab",
+    courseId: 457,
+    sectionCode: "221_D5",
     url: "https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=457&versionId=1",
   },
+  // {
+  //   courseName: "Data Communication",
+  //   courseId: 458,
+  //   sectionCode: "221_D1",
+  //   url: "https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=458&versionId=1",
+  // },
 ];
 
 const main = async () => {
@@ -56,15 +64,21 @@ const main = async () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          const open = data.find((d) => d.sectionName === section.section);
+          const open = data.find((d) => d.sectionName === section.sectionCode);
           if (open?.capacity > open?.occupied) {
-            console.log("Seat available for", section.course);
+            console.log("Seat available for", section.courseName);
+            selectSection(headers, {
+              sectionId: open.acaCal_SectionID,
+              sectionName: section.sectionCode,
+              courseCode: open.formalCode,
+              courseId: section.courseId,
+            });
             sendEmail({
-              subject: section.course,
+              subject: section.courseName,
               availableSeat: open.capacity - open.occupied,
             });
           } else {
-            console.log("No seat available for", section.course);
+            console.log("No seat available for", section.courseName);
           }
         });
     });
@@ -73,6 +87,35 @@ const main = async () => {
   } finally {
     await browser.close();
   }
+};
+
+const selectSection = async (
+  headers,
+  { sectionId, sectionName, courseCode, courseId }
+) => {
+  const url = "https://studentportal.green.edu.bd/api/SectionTake";
+  const params = new URLSearchParams();
+  params.append("regWorkSheetId", "9055798");
+  params.append("newSectionId", sectionId);
+  params.append("sectionName", sectionName);
+  params.append("studentId", "24134");
+  params.append("courseCode", courseCode);
+  params.append("courseId", courseId);
+  params.append("versionId", "1");
+  params.append("programId", "2");
+  params.append(
+    "url",
+    "https://studentportal.green.edu.bd/Student/StudentSectionSelection"
+  );
+
+  const urlWithParams = url + "?" + params.toString();
+
+  fetch(urlWithParams, {
+    headers,
+    method: "POST",
+  }).then(() => {
+    console.log("Successfully registered on", sectionName);
+  });
 };
 
 main();
