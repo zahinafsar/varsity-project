@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "job",
+      "script": "node",
+      "args": "./index.js",
+      "autorestart": false,
+      "cron_restart": "*/1 * * * *"
+    }
+  ]
+}

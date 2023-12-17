@@ -10,13 +10,12 @@ public class Database {
     public Database() {
         try {
             if (conn == null || conn.isClosed()) {
-                String url = "jdbc:postgresql://localhost:5432/votingapp";
-                String user = "zahinafsar";
-                String password = "zahin";
-                // String url =
-                // "jdbc:postgresql://bndaojkwjdddwx26sq51-postgresql.services.clever-cloud.com:5432/bndaojkwjdddwx26sq51";
-                // String user = "uza8gcjtli8wqebodl8d";
-                // String password = "lTqtmeKYmwALtuooLJqbZ4LhhUOi7m";
+                // String url = "jdbc:postgresql://localhost:5432/votingapp";
+                // String user = "zahinafsar";
+                // String password = "zahin";
+                String url = "jdbc:postgresql://bdazdhpvvrt9wbrskldm-postgresql.services.clever-cloud.com:50013/bdazdhpvvrt9wbrskldm";
+                String user = "uza8gcjtli8wqebodl8d";
+                String password = "lTqtmeKYmwALtuooLJqbZ4LhhUOi7m";
                 Class.forName("org.postgresql.Driver");
                 conn = DriverManager.getConnection(url, user, password);
                 System.out.println("Connected to the PostgreSQL server successfully.");
