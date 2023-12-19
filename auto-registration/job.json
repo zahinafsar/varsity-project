@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "job",
+      "name": "bot",
       "script": "node",
       "args": "./index.js",
       "autorestart": false,

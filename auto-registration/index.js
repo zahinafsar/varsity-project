@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 const { sendEmail } = require("./email");
 const { format } = require("date-fns");
+const fetch = require("node-fetch");
 
 const sections = [
   {
@@ -25,7 +26,11 @@ const sections = [
 
 const main = async () => {
   console.log("Running on", format(new Date(), "hh:mm a"));
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({
+  	headless: "new",
+	executablePath: '/usr/bin/chromium-browser',
+	args: ["--no-sandbox"]
+  });
   const page = await browser.newPage();
   const timeout = 20000;
   page.setDefaultTimeout(timeout);
