@@ -1,35 +1,29 @@
+require("dotenv").config();
+
 const puppeteer = require("puppeteer");
+const axios = require("axios");
 const { sendEmail } = require("./email");
 const { format } = require("date-fns");
-const fetch = require("node-fetch");
 
 const sections = [
-  {
-    courseName: "Web Programming",
-    courseId: 448,
-    sectionCode: "213_D5",
-    url: "https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=448&versionId=1",
-  },
+  // {
+  //   courseName: "Web Programming",
+  //   courseId: 448,
+  //   sectionCode: "213_D5",
+  // },
   {
     courseName: "Compiler Lab",
     courseId: 457,
-    sectionCode: "221_D5",
-    url: "https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=457&versionId=1",
+    sectionCode: "222_D5",
   },
-  // {
-  //   courseName: "Data Communication",
-  //   courseId: 458,
-  //   sectionCode: "221_D1",
-  //   url: "https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=458&versionId=1",
-  // },
 ];
 
 const main = async () => {
   console.log("Running on", format(new Date(), "hh:mm a"));
   const browser = await puppeteer.launch({
-  	headless: "new",
-	executablePath: '/usr/bin/chromium-browser',
-	args: ["--no-sandbox"]
+    headless: "new",
+    executablePath: "/usr/bin/chromium-browser",
+    args: ["--no-sandbox"],
   });
   const page = await browser.newPage();
   const timeout = 20000;
@@ -62,30 +56,39 @@ const main = async () => {
       "Referrer-Policy": "strict-origin-when-cross-origin",
     };
 
-    sections.forEach((section) => {
-      fetch(section.url, {
-        headers,
-        method: "POST",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const open = data.find((d) => d.sectionName === section.sectionCode);
-          if (open?.capacity > open?.occupied) {
-            console.log("Seat available for", section.courseName);
-            selectSection(headers, {
-              sectionId: open.acaCal_SectionID,
-              sectionName: section.sectionCode,
-              courseCode: open.formalCode,
-              courseId: section.courseId,
-            });
-            sendEmail({
-              subject: section.courseName,
-              availableSeat: open.capacity - open.occupied,
-            });
-          } else {
-            console.log("No seat available for", section.courseName);
-          }
-        });
+    const allCourse = await getCourses(headers);
+
+    sections.forEach(async (section) => {
+      const { data } = await axios.post(
+        `https://studentportal.green.edu.bd/api/CourseSectionInfo?acaCalId=71&programId=2&courseId=${section.courseId}&versionId=1`,
+        null,
+        {
+          headers,
+        }
+      );
+      const open = data.find((d) => d.sectionName === section.sectionCode);
+      const course = allCourse.find((c) => c.courseID === section.courseId);
+      if (course.sectionName === null) {
+        if (open?.capacity > open?.occupied) {
+          console.log("Seat available for", section.courseName);
+          selectSection(headers, {
+            sheetId: course.regWorksheetId,
+            sectionId: open.acaCal_SectionID,
+            sectionName: section.sectionCode,
+            courseCode: open.formalCode,
+            courseId: section.courseId,
+          });
+          console.log("Section selected for", section.courseName);
+          sendEmail({
+            subject: section.courseName,
+            availableSeat: open.capacity - open.occupied,
+          });
+        } else {
+          console.log("No seat available for", section.courseName);
+        }
+      } else {
+        console.log("You already got a section for", section.courseName);
+      }
     });
   } catch (err) {
     console.log(err);
@@ -96,11 +99,11 @@ const main = async () => {
 
 const selectSection = async (
   headers,
-  { sectionId, sectionName, courseCode, courseId }
+  { sectionId, sectionName, courseCode, courseId, sheetId }
 ) => {
   const url = "https://studentportal.green.edu.bd/api/SectionTake";
   const params = new URLSearchParams();
-  params.append("regWorkSheetId", "9055798");
+  params.append("regWorkSheetId", sheetId);
   params.append("newSectionId", sectionId);
   params.append("sectionName", sectionName);
   params.append("studentId", "24134");
@@ -115,12 +118,27 @@ const selectSection = async (
 
   const urlWithParams = url + "?" + params.toString();
 
-  fetch(urlWithParams, {
+  await axios.post(urlWithParams, null, {
     headers,
-    method: "POST",
-  }).then(() => {
-    console.log("Successfully registered on", sectionName);
   });
+};
+
+const getCourses = async (headers) => {
+  const { data } = await axios.post(
+    "https://studentportal.green.edu.bd/api/AutoAssignCourse?studentId=24134",
+    null,
+    {
+      headers,
+      referrer:
+        "https://studentportal.green.edu.bd/Student/StudentSectionSelection",
+      referrerPolicy: "strict-origin-when-cross-origin",
+      body: null,
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+    }
+  );
+  return data;
 };
 
 main();

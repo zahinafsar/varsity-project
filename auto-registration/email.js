@@ -1,5 +1,4 @@
 const sendGridMail = require("@sendgrid/mail");
-require("dotenv").config();
 sendGridMail.setApiKey(process.env.SEND_GRID);
 
 exports.sendEmail = async ({ subject, availableSeat }) => {
