@@ -6,11 +6,6 @@ const { sendEmail } = require("./email");
 const { format } = require("date-fns");
 
 const sections = [
-  // {
-  //   courseName: "Web Programming",
-  //   courseId: 448,
-  //   sectionCode: "213_D5",
-  // },
   {
     courseName: "Compiler Lab",
     courseId: 457,
@@ -91,7 +86,7 @@ const main = async () => {
       }
     });
   } catch (err) {
-    console.log(err);
+    console.log("Failed to run the script");
   } finally {
     await browser.close();
   }
