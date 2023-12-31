@@ -19,7 +19,7 @@ public class Controller {
 	}
 
 	@PostMapping("/")
-	public List<Node> wrapup(@RequestBody Node[] nodes) {
+	public List<Node> wrapup(@RequestBody List<Node> nodes) {
 		List<Node> convexHull = Service.giftWrapping(nodes);
 		return convexHull;
 	}

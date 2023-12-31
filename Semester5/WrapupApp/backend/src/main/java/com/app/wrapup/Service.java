@@ -1,50 +1,62 @@
 package com.app.wrapup;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Service {
-    public static List<Node> giftWrapping(Node[] nodes) {
-        List<Node> convexHull = new ArrayList<>();
 
-        Node startNode = nodes[0];
-
-        for (int i = 1; i < nodes.length; i++) {
-            if (
-                nodes[i].getTop() < startNode.getTop()
-                    || (nodes[i].getTop() == startNode.getTop()
-                            && nodes[i].getLeft() < startNode.getLeft())) {
-                startNode = nodes[i];
+    private static Node findPivot(List<Node> points) {
+        Node pivot = points.get(0);
+        for (Node point : points) {
+            if (point.getTop() < pivot.getTop()
+                    || (point.getTop() == pivot.getTop() && point.getLeft() < pivot.getLeft())) {
+                pivot = point;
             }
         }
+        return pivot;
+    }
 
-        Node current = startNode;
-        do {
-            convexHull.add(current);
-            Node next = nodes[0];
+    private static void sortByAngle(List<Node> points, Node pivot) {
+        points.sort(Comparator.comparingDouble(
+                point -> Math.atan2(point.getTop() - pivot.getTop(), point.getLeft() - pivot.getLeft())));
+    }
 
-            for (int i = 1; i < nodes.length; i++) {
-                if (next == current || orientation(current, next, nodes[i]) == 2) {
-                    next = nodes[i];
-                }
+    public static List<Node> giftWrapping(List<Node> points) {
+        if (points.size() < 3) {
+
+            return points;
+        }
+
+        List<Node> convexHull = new ArrayList<>();
+
+        Node pivot = findPivot(points);
+
+        sortByAngle(points, pivot);
+
+        convexHull.add(points.get(0));
+        convexHull.add(points.get(1));
+        convexHull.add(points.get(2));
+
+        for (int i = 3; i < points.size(); i++) {
+
+            while (orientation(convexHull.get(convexHull.size() - 2), convexHull.get(convexHull.size() - 1),
+                    points.get(i)) != 2) {
+                convexHull.remove(convexHull.size() - 1);
             }
-
-            current = next;
-
-        } while (current != startNode);
+            convexHull.add(points.get(i));
+        }
 
         return convexHull;
     }
 
-    // Helper function to determine the orientation of three points
     private static int orientation(Node p, Node q, Node r) {
-        double val = (q.getTop() - p.getTop())
-                * (r.getLeft() - q.getLeft())
-                - (q.getLeft() - p.getLeft())
-                        * (r.getTop() - q.getTop());
-
-        if (val == 0)
-            return 0; // Collinear
-        return (val > 0) ? 1 : 2; // Clockwise or Counterclockwise
+        double val = (q.getTop() - p.getTop()) * (r.getLeft() - q.getLeft())
+                - (q.getLeft() - p.getLeft()) * (r.getTop() - q.getTop());
+        if (val == 0) {
+            return 0;
+        }
+        return (val > 0) ? 1 : 2;
     }
+
 }
