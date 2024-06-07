@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "network.Main"
+        },
+        {
+            "type": "java",
             "name": "Controller",
             "request": "launch",
             "mainClass": "com.app.wrapup.Controller",
