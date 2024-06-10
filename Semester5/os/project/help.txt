@@ -3,9 +3,9 @@ Usage: upm [operation] [name]
 Operation
   install                     install apps
   uninstall                   uninstall apps
-  list                        show app list
   
 Options:
   --help                      show commands documentation
+  --list                      show app list
 
 
