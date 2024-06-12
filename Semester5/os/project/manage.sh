@@ -1,5 +1,7 @@
 #!/bin/bash
-JSON_FILE="commands.json"
+SCRIPT_NAME="upm"
+SHARE_PATH="/usr/local/share/$SCRIPT_NAME"
+JSON_FILE="$SHARE_PATH/commands.json"
 
 # Function to get the current Linux distribution
 get_distro() {

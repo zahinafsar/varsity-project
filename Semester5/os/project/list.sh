@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Path to the JSON file
-JSON_FILE="commands.json"
+SCRIPT_NAME="upm"
+SHARE_PATH="/usr/local/share/$SCRIPT_NAME"
+JSON_FILE="$SHARE_PATH/commands.json"
 
 # Function to list all available applications
 list_apps() {
