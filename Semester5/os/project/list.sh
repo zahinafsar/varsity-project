@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# Path to the JSON file
 SCRIPT_NAME="upm"
 SHARE_PATH="/usr/local/share/$SCRIPT_NAME"
 JSON_FILE="$SHARE_PATH/commands.json"
 
-# Function to list all available applications
 list_apps() {
     if [ ! -f "$JSON_FILE" ]; then
         echo "Error: JSON file not found at $JSON_FILE"
@@ -21,5 +19,4 @@ list_apps() {
     done
 }
 
-# Call the list_apps function
 list_apps

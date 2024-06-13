@@ -1,12 +1,11 @@
 #!/bin/bash
+
 SCRIPT_NAME="upm"
 SHARE_PATH="/usr/local/share/$SCRIPT_NAME"
 JSON_FILE="$SHARE_PATH/commands.json"
 
-# Function to get the current Linux distribution
 get_distro() {
     if [ -f /etc/os-release ]; then
-        # Extract the ID field from the os-release file
         . /etc/os-release
         echo "$ID"
     else
@@ -30,14 +29,11 @@ main() {
     eval "$app_commands"
 }
 
-# Get the distribution
 distro=$(get_distro)
 
-# Check that the correct number of arguments are provided
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <install|uninstall> <app_name>"
     exit 1
 fi
 
-# Call the main function with the action, app name, and detected distribution
 main "$1" "$2" "$distro"
