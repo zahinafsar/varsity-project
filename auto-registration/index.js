@@ -26,7 +26,7 @@ const main = async () => {
     console.log("Running on", new Date().toLocaleTimeString());
     const browser = await puppeteer.launch({
         headless: "new",
-        // executablePath: "/usr/bin/chromium-browser",
+        executablePath: "/usr/bin/chromium-browser",
         args: ["--no-sandbox"],
     });
     const page = await browser.newPage();
