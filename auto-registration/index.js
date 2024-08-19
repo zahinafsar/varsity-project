@@ -11,13 +11,11 @@ const config = {
 
 const sections = [
     {
-        courseName: "Microprocessors",
-        courseId: 454,
+        courseCode: "CSE 303",
         sectionCode: "222_D1",
     },
     {
-        courseName: "Computer Networking",
-        courseId: 462,
+        courseCode: "CSE 311",
         sectionCode: "221_D7",
     },
 ];
@@ -26,8 +24,8 @@ const main = async () => {
     console.log("Running on", new Date().toLocaleTimeString());
     const browser = await puppeteer.launch({
         headless: "new",
-        executablePath: "/usr/bin/chromium-browser",
-        args: ["--no-sandbox"],
+        // executablePath: "/usr/bin/chromium-browser",
+        args: ["--no-sandbox", '--incognito'],
     });
     const page = await browser.newPage();
     const timeout = 20000;
@@ -55,22 +53,23 @@ const main = async () => {
         );
 
         sections.forEach(async (section) => {
+            const course = allCourse.find((c) => c.formalCode.includes(section.courseCode));
+
             const data = await api(
                 "https://studentportal.green.edu.bd/api/CourseSectionInfo",
                 {
                     acaCalId: config.acaCalId,
                     programId: config.programId,
-                    courseId: section.courseId,
+                    courseId: course.courseID,
                     versionId: config.versionId,
                 }
             );
 
             const open = data.find((d) => d.sectionName === section.sectionCode);
-            const course = allCourse.find((c) => c.courseID === section.courseId);
 
             if (course.sectionName === null) {
                 if (open?.capacity > open?.occupied) {
-                    console.log("Seat available for", section.courseName);
+                    console.log("Seat available for", course.courseTitle);
                     await api(
                         "https://studentportal.green.edu.bd/api/SectionTake",
                         {
@@ -79,18 +78,18 @@ const main = async () => {
                             sectionName: section.sectionCode,
                             studentId: config.studentId,
                             courseCode: open.formalCode,
-                            courseId: section.courseId,
+                            courseId: course.courseID,
                             versionId: config.versionId,
                             programId: config.programId,
                             url: "https://studentportal.green.edu.bd/Student/StudentSectionSelection",
                         }
                     );
-                    console.log("Section selected for", section.courseName);
+                    console.log("Section selected for", course.courseTitle);
                 } else {
-                    console.log("No seat available for", section.courseName);
+                    console.log("No seat available for", course.courseTitle);
                 }
             } else {
-                console.log("You already got a section for", section.courseName);
+                console.log("You already got a section for", course.courseTitle);
             }
         });
     } catch (error) {
@@ -98,4 +97,6 @@ const main = async () => {
     }
 };
 
-main();
+setInterval(() => {
+    main();
+}, 10000)
