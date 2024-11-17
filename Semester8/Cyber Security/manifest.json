@@ -1,0 +1,20 @@
+{
+  "name": "SPM",
+  "version": "1.0.0",
+  "description": "Simple Password Manager",
+  "manifest_version": 3,
+  "permissions": ["contextMenus", "scripting", "activeTab"],
+  "background": {
+    "service_worker": "./service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "assets/16.png",
+    "32": "assets/32.png",
+    "48": "assets/48.png",
+    "128": "assets/128.png"
+  },
+  "action": {
+    "default_popup": "./popup/index.html"
+  }
+}
