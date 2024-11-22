@@ -2,6 +2,19 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ConverseeApplication",
+            "request": "launch",
+            "mainClass": "com.conversee.ConverseeApplication",
+            "projectName": "conversee"
+        },
+        {
+            "type": "java",
+            "name": "AppApplication",
+            "request": "launch",
+            "mainClass": "com.conversee.app.AppApplication"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "network.Main"
