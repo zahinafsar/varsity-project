@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import { StoreProvider } from "./context/store";
-import Router from "./router";
+import Router from "../router";
 
 ReactDOM.render(
   <StoreProvider>

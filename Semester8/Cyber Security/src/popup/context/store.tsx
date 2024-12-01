@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { routes } from "../router";
+import { routes } from "../../router";
 import { nanoid } from "nanoid";
 
 export type Password = {

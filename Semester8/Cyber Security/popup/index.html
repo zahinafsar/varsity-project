@@ -3,10 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <title>Secure Password Manager</title>
-    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link href="./style/global.css" rel="stylesheet" type="text/css" />
   </head>
-  <body style="background-color: black;">
+  <body style="background-color: black">
     <div id="spm-popup"></div>
   </body>
-  <script src="./app.js"></script>
+  <!-- <script>
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      globalThis.activeTab = tabs[0];
+    });
+  </script> -->
+  <script src="./popup/app.js"></script>
 </html>

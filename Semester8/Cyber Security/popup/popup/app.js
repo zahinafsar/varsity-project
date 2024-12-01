@@ -408,27 +408,27 @@
           {
             didWarnAboutStringRefs = {};
           }
-          function hasValidRef(config2) {
+          function hasValidRef(config) {
             {
-              if (hasOwnProperty.call(config2, "ref")) {
-                var getter = Object.getOwnPropertyDescriptor(config2, "ref").get;
+              if (hasOwnProperty.call(config, "ref")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
                 if (getter && getter.isReactWarning) {
                   return false;
                 }
               }
             }
-            return config2.ref !== void 0;
+            return config.ref !== void 0;
           }
-          function hasValidKey(config2) {
+          function hasValidKey(config) {
             {
-              if (hasOwnProperty.call(config2, "key")) {
-                var getter = Object.getOwnPropertyDescriptor(config2, "key").get;
+              if (hasOwnProperty.call(config, "key")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "key").get;
                 if (getter && getter.isReactWarning) {
                   return false;
                 }
               }
             }
-            return config2.key !== void 0;
+            return config.key !== void 0;
           }
           function defineKeyPropWarningGetter(props, displayName) {
             var warnAboutAccessingKey = function() {
@@ -460,12 +460,12 @@
               configurable: true
             });
           }
-          function warnIfStringRefCannotBeAutoConverted(config2) {
+          function warnIfStringRefCannotBeAutoConverted(config) {
             {
-              if (typeof config2.ref === "string" && ReactCurrentOwner.current && config2.__self && ReactCurrentOwner.current.stateNode !== config2.__self) {
+              if (typeof config.ref === "string" && ReactCurrentOwner.current && config.__self && ReactCurrentOwner.current.stateNode !== config.__self) {
                 var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
                 if (!didWarnAboutStringRefs[componentName]) {
-                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config2.ref);
+                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config.ref);
                   didWarnAboutStringRefs[componentName] = true;
                 }
               }
@@ -510,31 +510,31 @@
             }
             return element;
           };
-          function createElement(type, config2, children) {
+          function createElement(type, config, children) {
             var propName;
             var props = {};
             var key = null;
             var ref = null;
             var self = null;
             var source = null;
-            if (config2 != null) {
-              if (hasValidRef(config2)) {
-                ref = config2.ref;
+            if (config != null) {
+              if (hasValidRef(config)) {
+                ref = config.ref;
                 {
-                  warnIfStringRefCannotBeAutoConverted(config2);
+                  warnIfStringRefCannotBeAutoConverted(config);
                 }
               }
-              if (hasValidKey(config2)) {
+              if (hasValidKey(config)) {
                 {
-                  checkKeyStringCoercion(config2.key);
+                  checkKeyStringCoercion(config.key);
                 }
-                key = "" + config2.key;
+                key = "" + config.key;
               }
-              self = config2.__self === void 0 ? null : config2.__self;
-              source = config2.__source === void 0 ? null : config2.__source;
-              for (propName in config2) {
-                if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  props[propName] = config2[propName];
+              self = config.__self === void 0 ? null : config.__self;
+              source = config.__source === void 0 ? null : config.__source;
+              for (propName in config) {
+                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                  props[propName] = config[propName];
                 }
               }
             }
@@ -578,7 +578,7 @@
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
-          function cloneElement(element, config2, children) {
+          function cloneElement(element, config, children) {
             if (element === null || element === void 0) {
               throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
             }
@@ -589,27 +589,27 @@
             var self = element._self;
             var source = element._source;
             var owner = element._owner;
-            if (config2 != null) {
-              if (hasValidRef(config2)) {
-                ref = config2.ref;
+            if (config != null) {
+              if (hasValidRef(config)) {
+                ref = config.ref;
                 owner = ReactCurrentOwner.current;
               }
-              if (hasValidKey(config2)) {
+              if (hasValidKey(config)) {
                 {
-                  checkKeyStringCoercion(config2.key);
+                  checkKeyStringCoercion(config.key);
                 }
-                key = "" + config2.key;
+                key = "" + config.key;
               }
               var defaultProps;
               if (element.type && element.type.defaultProps) {
                 defaultProps = element.type.defaultProps;
               }
-              for (propName in config2) {
-                if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  if (config2[propName] === void 0 && defaultProps !== void 0) {
+              for (propName in config) {
+                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                  if (config[propName] === void 0 && defaultProps !== void 0) {
                     props[propName] = defaultProps[propName];
                   } else {
-                    props[propName] = config2[propName];
+                    props[propName] = config[propName];
                   }
                 }
               }
@@ -784,7 +784,7 @@
             }
             return children;
           }
-          function createContext(defaultValue) {
+          function createContext2(defaultValue) {
             var context = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1070,7 +1070,7 @@
             }
             return dispatcher;
           }
-          function useContext(Context) {
+          function useContext2(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1092,11 +1092,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef3(initialValue) {
+          function useRef(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect3(create, deps) {
+          function useEffect2(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1865,7 +1865,7 @@
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.act = act;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext;
+          exports.createContext = createContext2;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1876,17 +1876,17 @@
           exports.startTransition = startTransition;
           exports.unstable_act = act;
           exports.useCallback = useCallback;
-          exports.useContext = useContext;
+          exports.useContext = useContext2;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect3;
+          exports.useEffect = useEffect2;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect;
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
-          exports.useRef = useRef3;
+          exports.useRef = useRef;
           exports.useState = useState3;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
@@ -2434,7 +2434,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment2 = 7;
+          var Fragment = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3046,11 +3046,11 @@
           });
           var isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\n\t]*a[\r\n\t]*s[\r\n\t]*c[\r\n\t]*r[\r\n\t]*i[\r\n\t]*p[\r\n\t]*t[\r\n\t]*\:/i;
           var didWarn = false;
-          function sanitizeURL(url) {
+          function sanitizeURL(url2) {
             {
-              if (!didWarn && isJavaScriptProtocol.test(url)) {
+              if (!didWarn && isJavaScriptProtocol.test(url2)) {
                 didWarn = true;
-                error("A future version of React will block javascript: URLs as a security precaution. Use event handlers instead if you can. If you need to generate unsafe HTML try using dangerouslySetInnerHTML instead. React was passed %s.", JSON.stringify(url));
+                error("A future version of React will block javascript: URLs as a security precaution. Use event handlers instead if you can. If you need to generate unsafe HTML try using dangerouslySetInnerHTML instead. React was passed %s.", JSON.stringify(url2));
               }
             }
           }
@@ -3591,7 +3591,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment2:
+              case Fragment:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -12020,7 +12020,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment2) {
+              if (current2 === null || current2.tag !== Fragment) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -12423,7 +12423,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment2) {
+                    if (child.tag === Fragment) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -13354,7 +13354,7 @@
             /*  */
             2
           );
-          var Layout = (
+          var Layout2 = (
             /*    */
             4
           );
@@ -14066,10 +14066,10 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout, create, deps);
+            return mountEffectImpl(fiberFlags, Layout2, create, deps);
           }
           function updateLayoutEffect(create, deps) {
-            return updateEffectImpl(Update, Layout, create, deps);
+            return updateEffectImpl(Update, Layout2, create, deps);
           }
           function imperativeHandleEffect(create, ref) {
             if (typeof ref === "function") {
@@ -14107,7 +14107,7 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return mountEffectImpl(fiberFlags, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function updateImperativeHandle(ref, create, deps) {
             {
@@ -14116,7 +14116,7 @@
               }
             }
             var effectDeps = deps !== null && deps !== void 0 ? deps.concat([ref]) : null;
-            return updateEffectImpl(Update, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return updateEffectImpl(Update, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function mountDebugValue(value, formatterFn) {
           }
@@ -17899,7 +17899,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment2:
+              case Fragment:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18171,7 +18171,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment2:
+              case Fragment:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -18642,7 +18642,7 @@
           };
           function safelyCallCommitHookLayoutEffectListMount(current2, nearestMountedAncestor) {
             try {
-              commitHookEffectListMount(Layout, current2);
+              commitHookEffectListMount(Layout2, current2);
             } catch (error2) {
               captureCommitPhaseError(current2, nearestMountedAncestor, error2);
             }
@@ -18817,7 +18817,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStarted(finishedWork);
-                      } else if ((flags & Layout) !== NoFlags$1) {
+                      } else if ((flags & Layout2) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStarted(finishedWork);
                       }
                     }
@@ -18835,7 +18835,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStopped();
-                      } else if ((flags & Layout) !== NoFlags$1) {
+                      } else if ((flags & Layout2) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStopped();
                       }
                     }
@@ -18856,7 +18856,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStarted(finishedWork);
-                    } else if ((flags & Layout) !== NoFlags$1) {
+                    } else if ((flags & Layout2) !== NoFlags$1) {
                       markComponentLayoutEffectMountStarted(finishedWork);
                     }
                   }
@@ -18875,7 +18875,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStopped();
-                    } else if ((flags & Layout) !== NoFlags$1) {
+                    } else if ((flags & Layout2) !== NoFlags$1) {
                       markComponentLayoutEffectMountStopped();
                     }
                   }
@@ -18883,7 +18883,7 @@
                     var destroy = effect.destroy;
                     if (destroy !== void 0 && typeof destroy !== "function") {
                       var hookName = void 0;
-                      if ((effect.tag & Layout) !== NoFlags) {
+                      if ((effect.tag & Layout2) !== NoFlags) {
                         hookName = "useLayoutEffect";
                       } else if ((effect.tag & Insertion) !== NoFlags) {
                         hookName = "useInsertionEffect";
@@ -18953,12 +18953,12 @@
                     if (finishedWork.mode & ProfileMode) {
                       try {
                         startLayoutEffectTimer();
-                        commitHookEffectListMount(Layout | HasEffect, finishedWork);
+                        commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
                       } finally {
                         recordLayoutEffectDuration(finishedWork);
                       }
                     } else {
-                      commitHookEffectListMount(Layout | HasEffect, finishedWork);
+                      commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
                     }
                   }
                   break;
@@ -19509,7 +19509,7 @@
                         if (destroy !== void 0) {
                           if ((tag & Insertion) !== NoFlags$1) {
                             safelyCallDestroy(deletedFiber, nearestMountedAncestor, destroy);
-                          } else if ((tag & Layout) !== NoFlags$1) {
+                          } else if ((tag & Layout2) !== NoFlags$1) {
                             {
                               markComponentLayoutEffectUnmountStarted(deletedFiber);
                             }
@@ -19664,14 +19664,14 @@
                   if (finishedWork.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
                     recordLayoutEffectDuration(finishedWork);
                   } else {
                     try {
-                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
@@ -19964,12 +19964,12 @@
                   if (fiber.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout, fiber, fiber.return);
+                      commitHookEffectListUnmount(Layout2, fiber, fiber.return);
                     } finally {
                       recordLayoutEffectDuration(fiber);
                     }
                   } else {
-                    commitHookEffectListUnmount(Layout, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout2, fiber, fiber.return);
                   }
                   break;
                 }
@@ -20252,7 +20252,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListMount(Layout | HasEffect, fiber);
+                    commitHookEffectListMount(Layout2 | HasEffect, fiber);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -20293,7 +20293,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListUnmount(Layout | HasEffect, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout2 | HasEffect, fiber, fiber.return);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -22432,7 +22432,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment2, elements, key, mode);
+            var fiber = createFiber(Fragment, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -24045,34 +24045,34 @@
           {
             didWarnAboutStringRefs = {};
           }
-          function hasValidRef(config2) {
+          function hasValidRef(config) {
             {
-              if (hasOwnProperty.call(config2, "ref")) {
-                var getter = Object.getOwnPropertyDescriptor(config2, "ref").get;
+              if (hasOwnProperty.call(config, "ref")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
                 if (getter && getter.isReactWarning) {
                   return false;
                 }
               }
             }
-            return config2.ref !== void 0;
+            return config.ref !== void 0;
           }
-          function hasValidKey(config2) {
+          function hasValidKey(config) {
             {
-              if (hasOwnProperty.call(config2, "key")) {
-                var getter = Object.getOwnPropertyDescriptor(config2, "key").get;
+              if (hasOwnProperty.call(config, "key")) {
+                var getter = Object.getOwnPropertyDescriptor(config, "key").get;
                 if (getter && getter.isReactWarning) {
                   return false;
                 }
               }
             }
-            return config2.key !== void 0;
+            return config.key !== void 0;
           }
-          function warnIfStringRefCannotBeAutoConverted(config2, self) {
+          function warnIfStringRefCannotBeAutoConverted(config, self) {
             {
-              if (typeof config2.ref === "string" && ReactCurrentOwner.current && self && ReactCurrentOwner.current.stateNode !== self) {
+              if (typeof config.ref === "string" && ReactCurrentOwner.current && self && ReactCurrentOwner.current.stateNode !== self) {
                 var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
                 if (!didWarnAboutStringRefs[componentName]) {
-                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config2.ref);
+                  error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config.ref);
                   didWarnAboutStringRefs[componentName] = true;
                 }
               }
@@ -24147,7 +24147,7 @@
             }
             return element;
           };
-          function jsxDEV(type, config2, maybeKey, source, self) {
+          function jsxDEV(type, config, maybeKey, source, self) {
             {
               var propName;
               var props = {};
@@ -24159,19 +24159,19 @@
                 }
                 key = "" + maybeKey;
               }
-              if (hasValidKey(config2)) {
+              if (hasValidKey(config)) {
                 {
-                  checkKeyStringCoercion(config2.key);
+                  checkKeyStringCoercion(config.key);
                 }
-                key = "" + config2.key;
+                key = "" + config.key;
               }
-              if (hasValidRef(config2)) {
-                ref = config2.ref;
-                warnIfStringRefCannotBeAutoConverted(config2, self);
+              if (hasValidRef(config)) {
+                ref = config.ref;
+                warnIfStringRefCannotBeAutoConverted(config, self);
               }
-              for (propName in config2) {
-                if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                  props[propName] = config2[propName];
+              for (propName in config) {
+                if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                  props[propName] = config[propName];
                 }
               }
               if (type && type.defaultProps) {
@@ -24433,10 +24433,10 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx6 = jsxWithValidationDynamic;
+          var jsx9 = jsxWithValidationDynamic;
           var jsxs5 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx6;
+          exports.jsx = jsx9;
           exports.jsxs = jsxs5;
         })();
       }
@@ -24455,388 +24455,281 @@
     }
   });
 
-  // src/modal/app.tsx
+  // src/popup/app.tsx
   var import_react_dom = __toESM(require_react_dom());
 
-  // src/modal/modal.tsx
+  // src/popup/context/store.tsx
   var import_react2 = __toESM(require_react());
 
-  // src/api/index.ts
-  var BASE_URL = "http://localhost:9090/api";
-  var httpClient = async (method, url, body, header) => {
-    const api_url = url.includes("http") ? url : `${BASE_URL}${url}`;
-    return new Promise(async (resolve, reject) => {
-      const res = await fetch(api_url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          ...header
-        },
-        body: JSON.stringify(body)
-      });
-      const result = await res.json();
-      if (res.ok) {
-        resolve(result);
-      } else {
-        reject(result);
-      }
-    });
-  };
-  var api = {
-    post: (url, body, header) => httpClient("POST", url, body, header),
-    get: (url, body, header) => httpClient("GET", url, body, header),
-    put: (url, body, header) => httpClient("PUT", url, body, header),
-    patch: (url, body, header) => httpClient("PATCH", url, body, header),
-    delete: (url, body, header) => httpClient("DELETE", url, body, header)
-  };
-
-  // src/api/chat_gpt.ts
-  var API_KEY = "###";
-  var GPT_BASE_URL = "https://api.openai.com/v1";
-  var config = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${API_KEY}`
-  };
-  var _sendMessage = async (message) => {
-    return api.post(`${GPT_BASE_URL}/chat/completions`, {
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }]
-    }, config);
-  };
-
-  // src/modal/components/Draggable.tsx
+  // src/popup/pages/add.tsx
   var import_react = __toESM(require_react());
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
-  var Draggable = ({
-    children,
-    dragger,
-    className,
-    onClick
-  }) => {
-    const initialPosition = { x: 20, y: 20 };
-    const [position, setPosition] = (0, import_react.useState)(initialPosition);
-    const mouseTracker = (0, import_react.useRef)({ start: { x: 0, y: 0 }, end: { x: 0, y: 0 } });
-    const isDragging = (0, import_react.useRef)(false);
-    const offset = (0, import_react.useRef)({ x: 0, y: 0 });
-    const elementRef = (0, import_react.useRef)(null);
-    (0, import_react.useEffect)(() => {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-      return () => {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-      };
-    }, []);
-    const handleMouseDown = (e) => {
-      isDragging.current = true;
-      mouseTracker.current.start = {
-        x: e.clientX,
-        y: e.clientY
-      };
-      offset.current = {
-        x: e.clientX - position.x,
-        y: e.clientY - position.y
-      };
-    };
-    const handleMouseMove = (e) => {
-      if (isDragging.current) {
-        const elementWidth = elementRef.current.offsetWidth;
-        const elementHeight = elementRef.current.offsetHeight;
-        const newX = e.clientX - offset.current.x;
-        const newY = e.clientY - offset.current.y;
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-        const maxX = screenWidth - elementWidth;
-        const maxY = screenHeight - elementHeight;
-        setPosition({
-          x: Math.min(Math.max(newX, 0), maxX),
-          y: Math.min(Math.max(newY, 0), maxY)
-        });
-      }
-    };
-    const handleMouseUp = (e) => {
-      mouseTracker.current.end = {
-        x: e.clientX,
-        y: e.clientY
-      };
-      isDragging.current = false;
-    };
-    const handleMinimize = (e) => {
-      const { start, end } = mouseTracker.current;
-      if (start.x === end.x && start.y === end.y) {
-        setPosition(initialPosition);
-        onClick(false);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
-      "div",
-      {
-        onClick: handleMinimize,
-        ref: elementRef,
-        style: { position: "fixed", top: position.y, left: position.x, zIndex: 9999999 },
-        className,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { onMouseDown: handleMouseDown, children: dragger }),
-          children
-        ]
-      }
-    );
-  };
-  var Draggable_default = Draggable;
 
-  // src/modal/components/TypingLoader.tsx
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  function TypingLoader() {
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "spm-typing-indicator", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", {}),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", {}),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", {})
+  // src/components/input.tsx
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
+  function Input({
+    label,
+    onChange,
+    placeholder,
+    type,
+    value,
+    className,
+    ...props
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "block text-gray-500 text-sm font-bold mb-1", children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        "input",
+        {
+          className: "rounded text-sm w-full py-2 px-2 bg-neutral-900",
+          type,
+          placeholder,
+          value,
+          onChange,
+          ...props
+        }
+      )
     ] });
   }
 
-  // src/icon/index.tsx
+  // src/theme/index.ts
+  var theme = {
+    primary: "#353740",
+    primary100: "#444654",
+    primary900: "#303139"
+  };
+
+  // src/components/layout.tsx
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var Layout = ({ children }) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { backgroundColor: theme.primary }, className: "w-[300px] dark:text-primary", children });
+  };
+  var layout_default = Layout;
+
+  // src/popup/pages/add.tsx
   var import_jsx_runtime3 = __toESM(require_jsx_runtime());
-  var SVG = {
-    threeDots: () => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-      "svg",
-      {
-        width: "3",
-        height: "20",
-        viewBox: "0 0 3 20",
-        fill: "none",
-        xmlns: "http://www.w3.org/2000/svg",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("rect", { width: "3", height: "3", rx: "0.5", fill: "white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("rect", { y: "8.18188", width: "3", height: "3", rx: "0.5", fill: "white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("rect", { y: "16.3635", width: "3", height: "3", rx: "0.5", fill: "white" })
-        ]
-      }
-    ),
-    logo: () => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-      "svg",
-      {
-        width: "48",
-        height: "48",
-        viewBox: "0 0 48 48",
-        fill: "none",
-        xmlns: "http://www.w3.org/2000/svg",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("rect", { width: "48", height: "48", rx: "24", fill: "white" }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-            "ellipse",
-            {
-              cx: "23.9671",
-              cy: "23.8396",
-              rx: "4.71193",
-              ry: "4.57982",
-              fill: "#FF0000"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-            "rect",
-            {
-              x: "28.3781",
-              y: "29.2163",
-              width: "4.94009",
-              height: "12.8048",
-              rx: "2.47004",
-              transform: "rotate(-60 28.3781 29.2163)",
-              fill: "#FF0000"
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-            "path",
-            {
-              fillRule: "evenodd",
-              clipRule: "evenodd",
-              d: "M34.0337 35.3993C34.2486 35.5234 34.2962 35.8256 34.1067 35.9857C31.3694 38.2982 27.831 39.6922 23.9671 39.6922C15.2845 39.6922 8.24597 32.6536 8.24597 23.9711C8.24597 15.2886 15.2845 8.25 23.9671 8.25C32.6496 8.25 39.6882 15.2886 39.6882 23.9711C39.6882 24.9313 39.6021 25.8715 39.4372 26.7842C39.3913 27.0383 39.0936 27.1516 38.87 27.0225L36.1575 25.4564C35.9756 25.3514 35.7897 25.2595 35.6009 25.1805C35.1087 24.9746 34.748 24.504 34.748 23.9705C34.748 18.0163 29.9212 13.1895 23.967 13.1895C18.0128 13.1895 13.186 18.0163 13.186 23.9705C13.186 29.9247 18.0128 34.7515 23.967 34.7515C25.6819 34.7515 27.3034 34.3511 28.7429 33.6386C29.5503 33.239 30.5409 33.3828 31.3211 33.8332L34.0337 35.3993Z",
-              fill: "black"
-            }
-          )
-        ]
-      }
-    ),
-    send: () => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-      "svg",
-      {
-        stroke: "currentColor",
-        fill: "none",
-        strokeWidth: "2",
-        viewBox: "0 0 24 24",
-        strokeLinecap: "round",
-        strokeLinejoin: "round",
-        className: "h-4 w-4 mr-1",
-        height: "1.3em",
-        width: "1.3em",
-        xmlns: "http://www.w3.org/2000/svg",
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: "22", y1: "2", x2: "11", y2: "13" }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })
-        ]
-      }
-    )
-  };
-
-  // src/utils/parser.ts
-  function generateQuery({ query }) {
-    let q = "";
-    query.slice(-3).forEach((item) => {
-      if (item.question) {
-        q += "Question: " + item.question + "\n";
-      } else if (item.answer) {
-        q += "Answer: " + item.answer + "\n";
-      }
+  var url = window.location.href;
+  function Add() {
+    const { navigate, addPassword } = useStore();
+    const [password, setPassword] = (0, import_react.useState)({
+      password: "",
+      url
     });
-    q += "Answer: ";
-    return q;
+    const handlePassword = (e) => {
+      setPassword({
+        ...password,
+        [e.target.name]: e.target.value
+      });
+    };
+    const home = () => navigate((r) => r.home);
+    const save = () => {
+      addPassword({
+        password: password.password,
+        url: password.url
+      });
+      home();
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "SPM" }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { onClick: home, className: "text-xs text-blue-500 cursor-pointer", children: "Home" }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { onClick: save, className: "text-xs text-green-500 cursor-pointer", children: "Save" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3 w-full flex flex-col gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          Input,
+          {
+            onChange: handlePassword,
+            defaultValue: url,
+            name: "url",
+            label: "Url"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+          Input,
+          {
+            onChange: handlePassword,
+            name: "password",
+            label: "Password",
+            type: "password"
+          }
+        )
+      ] })
+    ] }) });
   }
+  var add_default = Add;
 
-  // constant/index.mjs
-  var ACTIONS = {
-    ASK: { id: "ASK", title: "Ask Quint" },
-    SUMMARIZE: { id: "SUMMARIZE", title: "Summarize" },
-    DESCRIBE: { id: "DESCRIBE", title: "Describe" }
+  // src/popup/pages/home.tsx
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+  function Home() {
+    const { navigate, setMasterKey, passwords, removePassword } = useStore();
+    const add = () => navigate((r) => r.add);
+    const logout = () => {
+      setMasterKey("");
+      navigate((r) => r.lock);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "SPM" }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { onClick: add, className: "text-xs text-green-500 cursor-pointer", children: "Add" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { onClick: logout, className: "text-xs text-red-400 cursor-pointer", children: "Logout" })
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "divide-y divide-gray-500 w-full max-h-[300px] overflow-auto", children: passwords.length ? passwords.map((password, index) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "div",
+          {
+            className: "flex justify-between items-center px-3 py-3",
+            children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex justify-between items-center", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-xs max-w-[70%] truncate", children: password.url }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "p",
+                  {
+                    className: "text-xs text-red-400 cursor-pointer",
+                    onClick: () => {
+                      removePassword(password.id);
+                    },
+                    children: "Delete"
+                  }
+                ) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Input, { type: "password", value: password.password })
+            ] })
+          },
+          index
+        );
+      }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "py-10 px-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "w-full text-center", children: "No passwords saved" }) }) })
+    ] }) });
+  }
+  var home_default = Home;
+
+  // src/popup/pages/lock.tsx
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+  function Lock() {
+    const { masterKey, setMasterKey, navigate } = useStore();
+    const onKeyPress = (e) => {
+      if (e.key === "Enter") {
+        navigate(routes.home);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "w-full border-b border-gray-500 py-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "Secure Password Manager" }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-center text-xs text-gray-400", children: "Keep your passwords safe and secure" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "p-3 w-full", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+        Input,
+        {
+          onKeyDown: onKeyPress,
+          value: masterKey,
+          label: "Master Key",
+          type: "password",
+          onChange: (v) => {
+            setMasterKey(v.target.value);
+          }
+        }
+      ) })
+    ] }) });
+  }
+  var lock_default = Lock;
+
+  // src/router.tsx
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+  var routes = {
+    home: "home",
+    lock: "lock",
+    add: "add"
+  };
+  var Router = ({}) => {
+    const { route } = useStore();
+    if (route === routes.lock) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(lock_default, {});
+    if (route === routes.home) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(home_default, {});
+    if (route === routes.add) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(add_default, {});
+    else return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Not found" });
+  };
+  var router_default = Router;
+
+  // node_modules/nanoid/url-alphabet/index.js
+  var urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
+
+  // node_modules/nanoid/index.browser.js
+  var nanoid = (size = 21) => {
+    let id = "";
+    let bytes = crypto.getRandomValues(new Uint8Array(size));
+    while (size--) {
+      id += urlAlphabet[bytes[size] & 63];
+    }
+    return id;
   };
 
-  // src/modal/modal.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  var Modal = () => {
-    const [input, setInput] = (0, import_react2.useState)("");
-    const [loader, setLoader] = (0, import_react2.useState)(false);
-    const [minimize, setMinimize] = (0, import_react2.useState)(false);
-    const [query, setQuery] = (0, import_react2.useState)([]);
-    const messagesEndRef = (0, import_react2.useRef)(null);
+  // src/popup/context/store.tsx
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
+  var Store = (0, import_react2.createContext)({
+    route: "",
+    navigate: () => {
+    },
+    masterKey: "",
+    setMasterKey: () => {
+    }
+  });
+  var StoreProvider = ({ children }) => {
+    const [route, setRoute] = (0, import_react2.useState)(routes.lock);
+    const [masterKey, setMasterKey] = (0, import_react2.useState)("");
+    const [passwords, setPasswords] = (0, import_react2.useState)([]);
     (0, import_react2.useEffect)(() => {
-      const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-          send();
-        }
-      };
-      document.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }, [input]);
-    (0, import_react2.useEffect)(() => {
-      messagesEndRef.current.scrollTo({
-        top: messagesEndRef.current.scrollHeight,
-        behavior: "smooth"
-      });
-    }, [query]);
-    const handleInput = (e) => {
-      setInput(e.target.value);
-    };
-    (0, import_react2.useEffect)(() => {
-      const action = sessionStorage.getItem("spm-action");
-      const selected = window.getSelection().toString();
-      if (action === ACTIONS.ASK.id) {
-        send(`What is "${selected}"?`);
-      } else if (action === ACTIONS.DESCRIBE.id) {
-        send(`Describe : "${selected}"`);
-      } else if (action === ACTIONS.SUMMARIZE.id) {
-        send(`Summarize : "${selected}"`);
-      } else {
-        setInput(selected);
+      const passwordsString = localStorage.getItem("passwords");
+      if (passwordsString) {
+        const passwords2 = JSON.parse(passwordsString);
+        setPasswords(passwords2);
       }
     }, []);
-    const onClose = () => {
-      document.body.removeChild(rootElement);
-    };
-    const onMinimize = () => {
-      setMinimize((prev) => !prev);
-    };
-    const send = async (message) => {
-      if (!message && !input) return;
-      const tempQuery = [...query, { question: input || message }];
-      try {
-        setQuery(tempQuery);
-        setInput("");
-        const questionQuery = generateQuery({
-          query: tempQuery
-        });
-        setLoader(true);
-        const res = await _sendMessage(questionQuery);
-        setLoader(false);
-        const answer = res.choices?.[0]?.message?.content;
-        setQuery([...tempQuery, { answer }]);
-      } catch (error) {
-        setLoader(false);
-        setQuery([...tempQuery, { answer: error.error.message }]);
-        console.log(error);
+    const navigate = (update) => {
+      if (typeof update === "function") {
+        setRoute(update(routes));
+      } else {
+        setRoute(update);
       }
     };
-    if (!minimize) {
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-        Draggable_default,
-        {
-          className: "spm-container",
-          dragger: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "spm-modal-bar", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { style: { margin: 0, color: "white" }, children: "Quint" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", gap: "10px" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "spm-close-button", onClick: onMinimize, children: "_" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "spm-close-button", onClick: onClose, children: "x" })
-            ] })
-          ] }),
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "spm-message-area", ref: messagesEndRef, children: query.map((data, index) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-              data.question && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "spm-avatar spm-avatar-user", children: "Me" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { style: { margin: "10px 0", color: "white" }, children: data.question })
-              ] }, `q-${index}`),
-              data.answer && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "spm-avatar", children: "Q" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { style: { margin: "10px 0", color: "white" }, children: data.answer })
-              ] }, `a-${index}`)
-            ] })) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-              "div",
-              {
-                style: {
-                  margin: "15px",
-                  display: "flex",
-                  position: "relative",
-                  alignItems: "center"
-                },
-                children: [
-                  loader && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TypingLoader, {}),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                    "input",
-                    {
-                      type: "text",
-                      className: "spm-message-input",
-                      placeholder: "Type your message here...",
-                      value: input,
-                      onChange: handleInput
-                    }
-                  ),
-                  !loader && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { onClick: () => send(), className: "spm-message-button", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(SVG.send, {}) })
-                ]
-              }
-            )
-          ]
-        }
-      );
-    } else {
-      return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-        Draggable_default,
-        {
-          onClick: setMinimize,
-          dragger: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "spm-float", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(SVG.logo, {}) })
-        }
-      );
-    }
+    const addPassword = (p) => {
+      const password = { ...p, id: nanoid() };
+      const passwordArray = [...passwords, password];
+      setPasswords(passwordArray);
+      const passwordsString = JSON.stringify(passwordArray);
+      localStorage.setItem("passwords", passwordsString);
+    };
+    const removePassword = (id) => {
+      const passwordArray = passwords.filter((p) => p.id !== id);
+      setPasswords(passwordArray);
+      const passwordsString = JSON.stringify(passwordArray);
+      localStorage.setItem("passwords", passwordsString);
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      Store.Provider,
+      {
+        value: {
+          route,
+          navigate,
+          masterKey,
+          setMasterKey,
+          passwords,
+          addPassword,
+          removePassword
+        },
+        children
+      }
+    );
   };
-  var modal_default = Modal;
+  var useStore = () => (0, import_react2.useContext)(Store);
 
-  // src/modal/app.tsx
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-  var isExist = document.getElementById("spm");
-  var rootElement = document.createElement("div");
-  if (!isExist) {
-    rootElement.id = "spm";
-    document.body.appendChild(rootElement);
-    import_react_dom.default.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(modal_default, {}), document.getElementById("spm"));
-  }
+  // src/popup/app.tsx
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+  import_react_dom.default.render(
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(StoreProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(router_default, {}) }),
+    document.getElementById("spm-popup")
+  );
 })();
 /*! Bundled license information:
 

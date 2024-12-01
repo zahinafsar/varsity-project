@@ -784,7 +784,7 @@
             }
             return children;
           }
-          function createContext2(defaultValue) {
+          function createContext(defaultValue) {
             var context = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1070,7 +1070,7 @@
             }
             return dispatcher;
           }
-          function useContext2(Context) {
+          function useContext(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1092,11 +1092,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef(initialValue) {
+          function useRef2(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect2(create, deps) {
+          function useEffect3(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1865,7 +1865,7 @@
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.act = act;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext2;
+          exports.createContext = createContext;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1876,17 +1876,17 @@
           exports.startTransition = startTransition;
           exports.unstable_act = act;
           exports.useCallback = useCallback;
-          exports.useContext = useContext2;
+          exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect2;
+          exports.useEffect = useEffect3;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect;
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
-          exports.useRef = useRef;
+          exports.useRef = useRef2;
           exports.useState = useState3;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
@@ -3046,11 +3046,11 @@
           });
           var isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\n\t]*a[\r\n\t]*s[\r\n\t]*c[\r\n\t]*r[\r\n\t]*i[\r\n\t]*p[\r\n\t]*t[\r\n\t]*\:/i;
           var didWarn = false;
-          function sanitizeURL(url2) {
+          function sanitizeURL(url) {
             {
-              if (!didWarn && isJavaScriptProtocol.test(url2)) {
+              if (!didWarn && isJavaScriptProtocol.test(url)) {
                 didWarn = true;
-                error("A future version of React will block javascript: URLs as a security precaution. Use event handlers instead if you can. If you need to generate unsafe HTML try using dangerouslySetInnerHTML instead. React was passed %s.", JSON.stringify(url2));
+                error("A future version of React will block javascript: URLs as a security precaution. Use event handlers instead if you can. If you need to generate unsafe HTML try using dangerouslySetInnerHTML instead. React was passed %s.", JSON.stringify(url));
               }
             }
           }
@@ -13354,7 +13354,7 @@
             /*  */
             2
           );
-          var Layout2 = (
+          var Layout = (
             /*    */
             4
           );
@@ -14066,10 +14066,10 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout2, create, deps);
+            return mountEffectImpl(fiberFlags, Layout, create, deps);
           }
           function updateLayoutEffect(create, deps) {
-            return updateEffectImpl(Update, Layout2, create, deps);
+            return updateEffectImpl(Update, Layout, create, deps);
           }
           function imperativeHandleEffect(create, ref) {
             if (typeof ref === "function") {
@@ -14107,7 +14107,7 @@
             if ((currentlyRenderingFiber$1.mode & StrictEffectsMode) !== NoMode) {
               fiberFlags |= MountLayoutDev;
             }
-            return mountEffectImpl(fiberFlags, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return mountEffectImpl(fiberFlags, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function updateImperativeHandle(ref, create, deps) {
             {
@@ -14116,7 +14116,7 @@
               }
             }
             var effectDeps = deps !== null && deps !== void 0 ? deps.concat([ref]) : null;
-            return updateEffectImpl(Update, Layout2, imperativeHandleEffect.bind(null, create, ref), effectDeps);
+            return updateEffectImpl(Update, Layout, imperativeHandleEffect.bind(null, create, ref), effectDeps);
           }
           function mountDebugValue(value, formatterFn) {
           }
@@ -18642,7 +18642,7 @@
           };
           function safelyCallCommitHookLayoutEffectListMount(current2, nearestMountedAncestor) {
             try {
-              commitHookEffectListMount(Layout2, current2);
+              commitHookEffectListMount(Layout, current2);
             } catch (error2) {
               captureCommitPhaseError(current2, nearestMountedAncestor, error2);
             }
@@ -18817,7 +18817,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStarted(finishedWork);
-                      } else if ((flags & Layout2) !== NoFlags$1) {
+                      } else if ((flags & Layout) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStarted(finishedWork);
                       }
                     }
@@ -18835,7 +18835,7 @@
                     {
                       if ((flags & Passive$1) !== NoFlags$1) {
                         markComponentPassiveEffectUnmountStopped();
-                      } else if ((flags & Layout2) !== NoFlags$1) {
+                      } else if ((flags & Layout) !== NoFlags$1) {
                         markComponentLayoutEffectUnmountStopped();
                       }
                     }
@@ -18856,7 +18856,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStarted(finishedWork);
-                    } else if ((flags & Layout2) !== NoFlags$1) {
+                    } else if ((flags & Layout) !== NoFlags$1) {
                       markComponentLayoutEffectMountStarted(finishedWork);
                     }
                   }
@@ -18875,7 +18875,7 @@
                   {
                     if ((flags & Passive$1) !== NoFlags$1) {
                       markComponentPassiveEffectMountStopped();
-                    } else if ((flags & Layout2) !== NoFlags$1) {
+                    } else if ((flags & Layout) !== NoFlags$1) {
                       markComponentLayoutEffectMountStopped();
                     }
                   }
@@ -18883,7 +18883,7 @@
                     var destroy = effect.destroy;
                     if (destroy !== void 0 && typeof destroy !== "function") {
                       var hookName = void 0;
-                      if ((effect.tag & Layout2) !== NoFlags) {
+                      if ((effect.tag & Layout) !== NoFlags) {
                         hookName = "useLayoutEffect";
                       } else if ((effect.tag & Insertion) !== NoFlags) {
                         hookName = "useInsertionEffect";
@@ -18953,12 +18953,12 @@
                     if (finishedWork.mode & ProfileMode) {
                       try {
                         startLayoutEffectTimer();
-                        commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
+                        commitHookEffectListMount(Layout | HasEffect, finishedWork);
                       } finally {
                         recordLayoutEffectDuration(finishedWork);
                       }
                     } else {
-                      commitHookEffectListMount(Layout2 | HasEffect, finishedWork);
+                      commitHookEffectListMount(Layout | HasEffect, finishedWork);
                     }
                   }
                   break;
@@ -19509,7 +19509,7 @@
                         if (destroy !== void 0) {
                           if ((tag & Insertion) !== NoFlags$1) {
                             safelyCallDestroy(deletedFiber, nearestMountedAncestor, destroy);
-                          } else if ((tag & Layout2) !== NoFlags$1) {
+                          } else if ((tag & Layout) !== NoFlags$1) {
                             {
                               markComponentLayoutEffectUnmountStarted(deletedFiber);
                             }
@@ -19664,14 +19664,14 @@
                   if (finishedWork.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
                     recordLayoutEffectDuration(finishedWork);
                   } else {
                     try {
-                      commitHookEffectListUnmount(Layout2 | HasEffect, finishedWork, finishedWork.return);
+                      commitHookEffectListUnmount(Layout | HasEffect, finishedWork, finishedWork.return);
                     } catch (error2) {
                       captureCommitPhaseError(finishedWork, finishedWork.return, error2);
                     }
@@ -19964,12 +19964,12 @@
                   if (fiber.mode & ProfileMode) {
                     try {
                       startLayoutEffectTimer();
-                      commitHookEffectListUnmount(Layout2, fiber, fiber.return);
+                      commitHookEffectListUnmount(Layout, fiber, fiber.return);
                     } finally {
                       recordLayoutEffectDuration(fiber);
                     }
                   } else {
-                    commitHookEffectListUnmount(Layout2, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout, fiber, fiber.return);
                   }
                   break;
                 }
@@ -20252,7 +20252,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListMount(Layout2 | HasEffect, fiber);
+                    commitHookEffectListMount(Layout | HasEffect, fiber);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -20293,7 +20293,7 @@
                 case ForwardRef:
                 case SimpleMemoComponent: {
                   try {
-                    commitHookEffectListUnmount(Layout2 | HasEffect, fiber, fiber.return);
+                    commitHookEffectListUnmount(Layout | HasEffect, fiber, fiber.return);
                   } catch (error2) {
                     captureCommitPhaseError(fiber, fiber.return, error2);
                   }
@@ -24433,11 +24433,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx9 = jsxWithValidationDynamic;
-          var jsxs5 = jsxWithValidationStatic;
+          var jsx6 = jsxWithValidationDynamic;
+          var jsxs4 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx9;
-          exports.jsxs = jsxs5;
+          exports.jsx = jsx6;
+          exports.jsxs = jsxs4;
         })();
       }
     }
@@ -24455,16 +24455,10 @@
     }
   });
 
-  // src/popup/app.tsx
+  // src/modal/app.tsx
   var import_react_dom = __toESM(require_react_dom());
 
-  // src/popup/context/store.tsx
-  var import_react2 = __toESM(require_react());
-
-  // src/popup/pages/add.tsx
-  var import_react = __toESM(require_react());
-
-  // src/popup/components/input.tsx
+  // src/components/input.tsx
   var import_jsx_runtime = __toESM(require_jsx_runtime());
   function Input({
     label,
@@ -24491,245 +24485,1031 @@
     ] });
   }
 
-  // src/theme/index.ts
-  var theme = {
-    primary: "#353740",
-    primary100: "#444654",
-    primary900: "#303139"
-  };
-
-  // src/popup/components/layout.tsx
+  // src/components/draggable.tsx
+  var import_react = __toESM(require_react());
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  var Layout = ({ children }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { backgroundColor: theme.primary }, className: "w-[300px] dark:text-primary", children });
+  var Draggable = ({
+    children,
+    dragger,
+    className,
+    onClick
+  }) => {
+    const initialPosition = { x: 20, y: 20 };
+    const [position, setPosition] = (0, import_react.useState)(initialPosition);
+    const mouseTracker = (0, import_react.useRef)({ start: { x: 0, y: 0 }, end: { x: 0, y: 0 } });
+    const isDragging = (0, import_react.useRef)(false);
+    const offset = (0, import_react.useRef)({ x: 0, y: 0 });
+    const elementRef = (0, import_react.useRef)(null);
+    (0, import_react.useEffect)(() => {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+    }, []);
+    const handleMouseDown = (e) => {
+      isDragging.current = true;
+      mouseTracker.current.start = {
+        x: e.clientX,
+        y: e.clientY
+      };
+      offset.current = {
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      };
+    };
+    const handleMouseMove = (e) => {
+      if (isDragging.current) {
+        const elementWidth = elementRef.current.offsetWidth;
+        const elementHeight = elementRef.current.offsetHeight;
+        const newX = e.clientX - offset.current.x;
+        const newY = e.clientY - offset.current.y;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const maxX = screenWidth - elementWidth;
+        const maxY = screenHeight - elementHeight;
+        setPosition({
+          x: Math.min(Math.max(newX, 0), maxX),
+          y: Math.min(Math.max(newY, 0), maxY)
+        });
+      }
+    };
+    const handleMouseUp = (e) => {
+      mouseTracker.current.end = {
+        x: e.clientX,
+        y: e.clientY
+      };
+      isDragging.current = false;
+    };
+    const handleMinimize = (e) => {
+      const { start, end } = mouseTracker.current;
+      if (start.x === end.x && start.y === end.y) {
+        setPosition(initialPosition);
+        onClick(false);
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+      "div",
+      {
+        onClick: handleMinimize,
+        ref: elementRef,
+        style: { position: "fixed", top: position.y, left: position.x, zIndex: 9999999 },
+        className,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { onMouseDown: handleMouseDown, children: dragger }),
+          children
+        ]
+      }
+    );
   };
-  var layout_default = Layout;
+  var draggable_default = Draggable;
 
-  // src/popup/pages/add.tsx
+  // src/modal/modal.tsx
+  var import_react2 = __toESM(require_react());
+
+  // src/components/button.tsx
   var import_jsx_runtime3 = __toESM(require_jsx_runtime());
-  var url = window.location.href;
-  function Add() {
-    const { navigate, addPassword } = useStore();
-    const [password, setPassword] = (0, import_react.useState)({
+  function Button({ children, onClick, className }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+      "button",
+      {
+        className: "dark:bg-blue-500 dark:text-primary hover:bg-blue-700 text-sm text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline " + className,
+        type: "button",
+        onClick,
+        children
+      }
+    );
+  }
+
+  // src/utils/aes.js
+  var SBOX = [
+    99,
+    124,
+    119,
+    123,
+    242,
+    107,
+    111,
+    197,
+    48,
+    1,
+    103,
+    43,
+    254,
+    215,
+    171,
+    118,
+    202,
+    130,
+    201,
+    125,
+    250,
+    89,
+    71,
+    240,
+    173,
+    212,
+    162,
+    175,
+    156,
+    164,
+    114,
+    192,
+    183,
+    253,
+    147,
+    38,
+    54,
+    63,
+    247,
+    204,
+    52,
+    165,
+    229,
+    241,
+    113,
+    216,
+    49,
+    21,
+    4,
+    199,
+    35,
+    195,
+    24,
+    150,
+    5,
+    154,
+    7,
+    18,
+    128,
+    226,
+    235,
+    39,
+    178,
+    117,
+    9,
+    131,
+    44,
+    26,
+    27,
+    110,
+    90,
+    160,
+    82,
+    59,
+    214,
+    179,
+    41,
+    227,
+    47,
+    132,
+    83,
+    209,
+    0,
+    237,
+    32,
+    252,
+    177,
+    91,
+    106,
+    203,
+    190,
+    57,
+    74,
+    76,
+    88,
+    207,
+    208,
+    239,
+    170,
+    251,
+    67,
+    77,
+    51,
+    133,
+    69,
+    249,
+    2,
+    127,
+    80,
+    60,
+    159,
+    168,
+    81,
+    163,
+    64,
+    143,
+    146,
+    157,
+    56,
+    245,
+    188,
+    182,
+    218,
+    33,
+    16,
+    255,
+    243,
+    210,
+    205,
+    12,
+    19,
+    236,
+    95,
+    151,
+    68,
+    23,
+    196,
+    167,
+    126,
+    61,
+    100,
+    93,
+    25,
+    115,
+    96,
+    129,
+    79,
+    220,
+    34,
+    42,
+    144,
+    136,
+    70,
+    238,
+    184,
+    20,
+    222,
+    94,
+    11,
+    219,
+    224,
+    50,
+    58,
+    10,
+    73,
+    6,
+    36,
+    92,
+    194,
+    211,
+    172,
+    98,
+    145,
+    149,
+    228,
+    121,
+    231,
+    200,
+    55,
+    109,
+    141,
+    213,
+    78,
+    169,
+    108,
+    86,
+    244,
+    234,
+    101,
+    122,
+    174,
+    8,
+    186,
+    120,
+    37,
+    46,
+    28,
+    166,
+    180,
+    198,
+    232,
+    221,
+    116,
+    31,
+    75,
+    189,
+    139,
+    138,
+    112,
+    62,
+    181,
+    102,
+    72,
+    3,
+    246,
+    14,
+    97,
+    53,
+    87,
+    185,
+    134,
+    193,
+    29,
+    158,
+    225,
+    248,
+    152,
+    17,
+    105,
+    217,
+    142,
+    148,
+    155,
+    30,
+    135,
+    233,
+    206,
+    85,
+    40,
+    223,
+    140,
+    161,
+    137,
+    13,
+    191,
+    230,
+    66,
+    104,
+    65,
+    153,
+    45,
+    15,
+    176,
+    84,
+    187,
+    22
+  ];
+  var INV_SBOX = [
+    82,
+    9,
+    106,
+    213,
+    48,
+    54,
+    165,
+    56,
+    191,
+    64,
+    163,
+    158,
+    129,
+    243,
+    215,
+    251,
+    124,
+    227,
+    57,
+    130,
+    155,
+    47,
+    255,
+    135,
+    52,
+    142,
+    67,
+    68,
+    196,
+    222,
+    233,
+    203,
+    84,
+    123,
+    148,
+    50,
+    166,
+    194,
+    35,
+    61,
+    238,
+    76,
+    149,
+    11,
+    66,
+    250,
+    195,
+    78,
+    8,
+    46,
+    161,
+    102,
+    40,
+    217,
+    36,
+    178,
+    118,
+    91,
+    162,
+    73,
+    109,
+    139,
+    209,
+    37,
+    114,
+    248,
+    246,
+    100,
+    134,
+    104,
+    152,
+    22,
+    212,
+    164,
+    92,
+    204,
+    93,
+    101,
+    182,
+    146,
+    108,
+    112,
+    72,
+    80,
+    253,
+    237,
+    185,
+    218,
+    94,
+    21,
+    70,
+    87,
+    167,
+    141,
+    157,
+    132,
+    144,
+    216,
+    171,
+    0,
+    140,
+    188,
+    211,
+    10,
+    247,
+    228,
+    88,
+    5,
+    184,
+    179,
+    69,
+    6,
+    208,
+    44,
+    30,
+    143,
+    202,
+    63,
+    15,
+    2,
+    193,
+    175,
+    189,
+    3,
+    1,
+    19,
+    138,
+    107,
+    58,
+    145,
+    17,
+    65,
+    79,
+    103,
+    220,
+    234,
+    151,
+    242,
+    207,
+    206,
+    240,
+    180,
+    230,
+    115,
+    150,
+    172,
+    116,
+    34,
+    231,
+    173,
+    53,
+    133,
+    226,
+    249,
+    55,
+    232,
+    28,
+    117,
+    223,
+    110,
+    71,
+    241,
+    26,
+    113,
+    29,
+    41,
+    197,
+    137,
+    111,
+    183,
+    98,
+    14,
+    170,
+    24,
+    190,
+    27,
+    252,
+    86,
+    62,
+    75,
+    198,
+    210,
+    121,
+    32,
+    154,
+    219,
+    192,
+    254,
+    120,
+    205,
+    90,
+    244,
+    31,
+    221,
+    168,
+    51,
+    136,
+    7,
+    199,
+    49,
+    177,
+    18,
+    16,
+    89,
+    39,
+    128,
+    236,
+    95,
+    96,
+    81,
+    127,
+    169,
+    25,
+    181,
+    74,
+    13,
+    45,
+    229,
+    122,
+    159,
+    147,
+    201,
+    156,
+    239,
+    160,
+    224,
+    59,
+    77,
+    174,
+    42,
+    245,
+    176,
+    200,
+    235,
+    187,
+    60,
+    131,
+    83,
+    153,
+    97,
+    23,
+    43,
+    4,
+    126,
+    186,
+    119,
+    214,
+    38,
+    225,
+    105,
+    20,
+    99,
+    85,
+    33,
+    12,
+    125
+  ];
+  var RCON = [
+    [1, 0, 0, 0],
+    [2, 0, 0, 0],
+    [4, 0, 0, 0],
+    [8, 0, 0, 0],
+    [16, 0, 0, 0],
+    [32, 0, 0, 0],
+    [64, 0, 0, 0],
+    [128, 0, 0, 0],
+    [27, 0, 0, 0],
+    [54, 0, 0, 0]
+  ];
+  var AES = class {
+    constructor(key) {
+      if (typeof key === "string") {
+        key = this.stringToBytes(key);
+      }
+      this.expandKey(key);
+    }
+    // String/bytes conversion methods
+    stringToBytes(str) {
+      const bytes = new Uint8Array(16);
+      for (let i = 0; i < Math.min(str.length, 16); i++) {
+        bytes[i] = str.charCodeAt(i);
+      }
+      return bytes;
+    }
+    bytesToString(bytes) {
+      let str = "";
+      for (let i = 0; i < bytes.length; i++) {
+        if (bytes[i] !== 0) {
+          str += String.fromCharCode(bytes[i]);
+        }
+      }
+      return str;
+    }
+    bytesToHex(bytes) {
+      return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+    }
+    // SubBytes Transformation
+    subBytes(state) {
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] = SBOX[state[i][j]];
+        }
+      }
+      return state;
+    }
+    // Inverse SubBytes Transformation
+    invSubBytes(state) {
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] = INV_SBOX[state[i][j]];
+        }
+      }
+      return state;
+    }
+    // ShiftRows Transformation
+    shiftRows(state) {
+      const temp = [];
+      for (let i = 0; i < 4; i++) {
+        temp[i] = state[i].slice();
+      }
+      for (let i = 1; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] = temp[i][(j + i) % 4];
+        }
+      }
+      return state;
+    }
+    // Inverse ShiftRows Transformation
+    invShiftRows(state) {
+      const temp = [];
+      for (let i = 0; i < 4; i++) {
+        temp[i] = state[i].slice();
+      }
+      for (let i = 1; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] = temp[i][(j - i + 4) % 4];
+        }
+      }
+      return state;
+    }
+    // MixColumns Transformation
+    mixColumns(state) {
+      for (let i = 0; i < 4; i++) {
+        const a = state[0][i];
+        const b = state[1][i];
+        const c = state[2][i];
+        const d = state[3][i];
+        state[0][i] = this.gmul(2, a) ^ this.gmul(3, b) ^ c ^ d;
+        state[1][i] = a ^ this.gmul(2, b) ^ this.gmul(3, c) ^ d;
+        state[2][i] = a ^ b ^ this.gmul(2, c) ^ this.gmul(3, d);
+        state[3][i] = this.gmul(3, a) ^ b ^ c ^ this.gmul(2, d);
+      }
+      return state;
+    }
+    // Inverse MixColumns Transformation
+    invMixColumns(state) {
+      for (let i = 0; i < 4; i++) {
+        const a = state[0][i];
+        const b = state[1][i];
+        const c = state[2][i];
+        const d = state[3][i];
+        state[0][i] = this.gmul(14, a) ^ this.gmul(11, b) ^ this.gmul(13, c) ^ this.gmul(9, d);
+        state[1][i] = this.gmul(9, a) ^ this.gmul(14, b) ^ this.gmul(11, c) ^ this.gmul(13, d);
+        state[2][i] = this.gmul(13, a) ^ this.gmul(9, b) ^ this.gmul(14, c) ^ this.gmul(11, d);
+        state[3][i] = this.gmul(11, a) ^ this.gmul(13, b) ^ this.gmul(9, c) ^ this.gmul(14, d);
+      }
+      return state;
+    }
+    // Galois Field multiplication
+    gmul(a, b) {
+      let p = 0;
+      for (let i = 0; i < 8; i++) {
+        if ((b & 1) !== 0) {
+          p ^= a;
+        }
+        const hi_bit_set = (a & 128) !== 0;
+        a <<= 1;
+        if (hi_bit_set) {
+          a ^= 27;
+        }
+        b >>= 1;
+      }
+      return p & 255;
+    }
+    // Add Round Key Transformation
+    addRoundKey(state, roundKey) {
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] ^= roundKey[i][j];
+        }
+      }
+      return state;
+    }
+    // Key Expansion
+    expandKey(key) {
+      this.roundKeys = new Array(11);
+      for (let i = 0; i < 11; i++) {
+        this.roundKeys[i] = Array(4).fill().map(() => Array(4).fill(0));
+      }
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          this.roundKeys[0][i][j] = key[i * 4 + j];
+        }
+      }
+      for (let round = 1; round < 11; round++) {
+        for (let i = 0; i < 4; i++) {
+          let temp = this.roundKeys[round - 1][i].slice();
+          if (i === 0) {
+            temp = this.rotWord(temp);
+            temp = this.subWord(temp);
+            temp = this.xorWords(temp, RCON[round - 1]);
+          }
+          this.roundKeys[round][i] = this.xorWords(this.roundKeys[round - 1][i], temp);
+        }
+      }
+    }
+    // Helper functions for Key Expansion
+    rotWord(word) {
+      const temp = word[0];
+      for (let i = 0; i < 3; i++) {
+        word[i] = word[i + 1];
+      }
+      word[3] = temp;
+      return word;
+    }
+    subWord(word) {
+      for (let i = 0; i < 4; i++) {
+        word[i] = SBOX[word[i]];
+      }
+      return word;
+    }
+    xorWords(word1, word2) {
+      const result = [];
+      for (let i = 0; i < 4; i++) {
+        result[i] = word1[i] ^ word2[i];
+      }
+      return result;
+    }
+    // Encrypt a 16-byte block or string
+    encrypt(input) {
+      if (typeof input === "string") {
+        input = this.stringToBytes(input);
+      }
+      let state = Array(4).fill().map(() => Array(4).fill(0));
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] = input[i * 4 + j];
+        }
+      }
+      state = this.addRoundKey(state, this.roundKeys[0]);
+      for (let round = 1; round < 10; round++) {
+        state = this.subBytes(state);
+        state = this.shiftRows(state);
+        state = this.mixColumns(state);
+        state = this.addRoundKey(state, this.roundKeys[round]);
+      }
+      state = this.subBytes(state);
+      state = this.shiftRows(state);
+      state = this.addRoundKey(state, this.roundKeys[10]);
+      const output = new Uint8Array(16);
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          output[i * 4 + j] = state[i][j];
+        }
+      }
+      return output;
+    }
+    // Decrypt a 16-byte block or hex string
+    decrypt(input) {
+      if (typeof input === "string") {
+        input = new Uint8Array(input.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)));
+      }
+      let state = Array(4).fill().map(() => Array(4).fill(0));
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          state[i][j] = input[i * 4 + j];
+        }
+      }
+      state = this.addRoundKey(state, this.roundKeys[10]);
+      state = this.invShiftRows(state);
+      state = this.invSubBytes(state);
+      for (let round = 9; round >= 1; round--) {
+        state = this.addRoundKey(state, this.roundKeys[round]);
+        state = this.invMixColumns(state);
+        state = this.invShiftRows(state);
+        state = this.invSubBytes(state);
+      }
+      state = this.addRoundKey(state, this.roundKeys[0]);
+      const output = new Uint8Array(16);
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          output[i * 4 + j] = state[i][j];
+        }
+      }
+      return output;
+    }
+  };
+
+  // src/modal/modal.tsx
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+  var Modal = () => {
+    const [page, setPage] = (0, import_react2.useState)("login");
+    const [masterKey, setMasterKey] = (0, import_react2.useState)("");
+    const [password, setPassword] = (0, import_react2.useState)({
       password: "",
-      url
+      url: window.location.href
     });
+    const [passwords, setPasswords] = (0, import_react2.useState)([]);
+    (0, import_react2.useEffect)(() => {
+      let tempPasswords = [];
+      try {
+        console.log(localStorage.getItem("passwords") || "[]");
+        tempPasswords = JSON.parse(localStorage.getItem("passwords") || "[]");
+        console.log(tempPasswords);
+      } catch (error) {
+      }
+      setPasswords(tempPasswords);
+    }, []);
+    const handleClose = () => {
+      document.getElementById("spm")?.remove();
+    };
+    const onKeyPress = (e) => {
+      if (e.key === "Enter") {
+        setPage("view");
+      }
+    };
     const handlePassword = (e) => {
       setPassword({
         ...password,
         [e.target.name]: e.target.value
       });
     };
-    const home = () => navigate((r) => r.home);
     const save = () => {
-      addPassword({
-        password: password.password,
-        url: password.url
-      });
-      home();
+      if (!password.password || !password.url) return;
+      const aes = new AES(masterKey);
+      const encrypted = aes.encrypt(password.password);
+      const tempPasswords = [
+        ...passwords,
+        { ...password, password: aes.bytesToHex(encrypted) }
+      ];
+      console.log(tempPasswords);
+      localStorage.setItem("passwords", JSON.stringify(tempPasswords));
+      setPasswords(tempPasswords);
+      setPage("view");
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "SPM" }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { onClick: home, className: "text-xs text-blue-500 cursor-pointer", children: "Home" }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { onClick: save, className: "text-xs text-green-500 cursor-pointer", children: "Save" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3 w-full flex flex-col gap-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-          Input,
-          {
-            onChange: handlePassword,
-            defaultValue: url,
-            name: "url",
-            label: "Url"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-          Input,
-          {
-            onChange: handlePassword,
-            name: "password",
-            label: "Password",
-            type: "password"
-          }
-        )
-      ] })
-    ] }) });
-  }
-  var add_default = Add;
-
-  // src/popup/pages/home.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  function Home() {
-    const { navigate, setMasterKey, passwords, removePassword } = useStore();
-    const add = () => navigate((r) => r.add);
-    const logout = () => {
-      setMasterKey("");
-      navigate((r) => r.lock);
+    const copy = (password2) => {
+      const aes = new AES(masterKey);
+      const decrypted = aes.decrypt(password2.password);
+      navigator.clipboard.writeText(aes.bytesToString(decrypted));
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "SPM" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { onClick: add, className: "text-xs text-green-500 cursor-pointer", children: "Add" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { onClick: logout, className: "text-xs text-red-400 cursor-pointer", children: "Logout" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "divide-y divide-gray-500 w-full max-h-[300px] overflow-auto", children: passwords.length ? passwords.map((password, index) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-          "div",
-          {
-            className: "flex justify-between items-center px-3 py-3",
-            children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex justify-between items-center", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-xs max-w-[70%] truncate", children: password.url }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                  "p",
-                  {
-                    className: "text-xs text-red-400 cursor-pointer",
-                    onClick: () => {
-                      removePassword(password.id);
-                    },
-                    children: "Delete"
-                  }
-                ) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Input, { type: "password", value: password.password })
-            ] })
-          },
-          index
-        );
-      }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "py-10 px-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "w-full text-center", children: "No passwords saved" }) }) })
-    ] }) });
-  }
-  var home_default = Home;
-
-  // src/popup/pages/lock.tsx
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-  function Lock() {
-    const { masterKey, setMasterKey, navigate } = useStore();
-    const onKeyPress = (e) => {
-      if (e.key === "Enter") {
-        navigate(routes.home);
-      }
+    const remove = (index) => {
+      const tempPasswords = passwords.filter((_, i) => i !== index);
+      localStorage.setItem("passwords", JSON.stringify(tempPasswords));
+      setPasswords(tempPasswords);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "w-full border-b border-gray-500 py-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "Secure Password Manager" }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-center text-xs text-gray-400", children: "Keep your passwords safe and secure" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "p-3 w-full", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-        Input,
-        {
-          onKeyDown: onKeyPress,
-          value: masterKey,
-          label: "Master Key",
-          type: "password",
-          onChange: (v) => {
-            setMasterKey(v.target.value);
-          }
-        }
-      ) })
-    ] }) });
-  }
-  var lock_default = Lock;
-
-  // src/popup/router.tsx
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
-  var routes = {
-    home: "home",
-    lock: "lock",
-    add: "add"
-  };
-  var Router = ({}) => {
-    const { route } = useStore();
-    if (route === routes.lock) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(lock_default, {});
-    if (route === routes.home) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(home_default, {});
-    if (route === routes.add) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(add_default, {});
-    else return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Not found" });
-  };
-  var router_default = Router;
-
-  // node_modules/nanoid/url-alphabet/index.js
-  var urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
-
-  // node_modules/nanoid/index.browser.js
-  var nanoid = (size = 21) => {
-    let id = "";
-    let bytes = crypto.getRandomValues(new Uint8Array(size));
-    while (size--) {
-      id += urlAlphabet[bytes[size] & 63];
-    }
-    return id;
-  };
-
-  // src/popup/context/store.tsx
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
-  var Store = (0, import_react2.createContext)({
-    route: "",
-    navigate: () => {
-    },
-    masterKey: "",
-    setMasterKey: () => {
-    }
-  });
-  var StoreProvider = ({ children }) => {
-    const [route, setRoute] = (0, import_react2.useState)(routes.lock);
-    const [masterKey, setMasterKey] = (0, import_react2.useState)("");
-    const [passwords, setPasswords] = (0, import_react2.useState)([]);
-    (0, import_react2.useEffect)(() => {
-      const passwordsString = localStorage.getItem("passwords");
-      if (passwordsString) {
-        const passwords2 = JSON.parse(passwordsString);
-        setPasswords(passwords2);
-      }
-    }, []);
-    const navigate = (update) => {
-      if (typeof update === "function") {
-        setRoute(update(routes));
-      } else {
-        setRoute(update);
-      }
-    };
-    const addPassword = (p) => {
-      const password = { ...p, id: nanoid() };
-      const passwordArray = [...passwords, password];
-      setPasswords(passwordArray);
-      const passwordsString = JSON.stringify(passwordArray);
-      localStorage.setItem("passwords", passwordsString);
-    };
-    const removePassword = (id) => {
-      const passwordArray = passwords.filter((p) => p.id !== id);
-      setPasswords(passwordArray);
-      const passwordsString = JSON.stringify(passwordArray);
-      localStorage.setItem("passwords", passwordsString);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-      Store.Provider,
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      draggable_default,
       {
-        value: {
-          route,
-          navigate,
-          masterKey,
-          setMasterKey,
-          passwords,
-          addPassword,
-          removePassword
-        },
-        children
+        className: "spm-container",
+        dragger: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "spm-modal-bar", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h3", { style: { margin: 0, color: "white" }, children: "Secure Password Manager" }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-2", children: [
+            page !== "login" && (page === "view" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "p",
+              {
+                className: "text-yellow-400 cursor-pointer text-sm",
+                onClick: () => setPage("add"),
+                children: "Add"
+              }
+            ) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "p",
+              {
+                className: "text-yellow-400 cursor-pointer text-sm",
+                onClick: () => setPage("view"),
+                children: "View"
+              }
+            )),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "p",
+              {
+                className: "text-red-400 cursor-pointer text-sm",
+                onClick: handleClose,
+                children: "Close"
+              }
+            )
+          ] })
+        ] }),
+        children: page === "login" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "px-3 pb-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          Input,
+          {
+            label: "Master Key",
+            name: "masterKey",
+            type: "password",
+            autoFocus: true,
+            value: masterKey,
+            onChange: (e) => setMasterKey(e.target.value),
+            onKeyDown: onKeyPress
+          }
+        ) }) : page === "add" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "px-3 pb-3 w-full flex flex-col gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            Input,
+            {
+              onChange: handlePassword,
+              defaultValue: password.url,
+              name: "url",
+              label: "Url"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            Input,
+            {
+              onChange: handlePassword,
+              name: "password",
+              label: "Password",
+              type: "password"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Button, { className: "mt-4", onClick: save, children: "Save" })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "divide-y divide-gray-500 w-full max-h-[300px] overflow-auto", children: passwords.length ? passwords.map((password2, index) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+            "div",
+            {
+              className: "flex justify-between items-center px-3 py-3",
+              children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex justify-between items-center", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-sm max-w-[70%] truncate", children: password2.url }),
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "p",
+                      {
+                        onClick: () => copy(password2),
+                        className: "text-sm text-green-400 cursor-pointer",
+                        children: "Copy"
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "p",
+                      {
+                        onClick: () => remove(index),
+                        className: "text-sm text-blue-400 cursor-pointer",
+                        children: "Remove"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  Input,
+                  {
+                    type: "password",
+                    value: password2.password
+                  }
+                )
+              ] })
+            },
+            index
+          );
+        }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "py-10 px-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "w-full text-center", children: "No passwords saved" }) }) })
       }
     );
   };
-  var useStore = () => (0, import_react2.useContext)(Store);
+  var modal_default = Modal;
 
-  // src/popup/app.tsx
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  import_react_dom.default.render(
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(StoreProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(router_default, {}) }),
-    document.getElementById("spm-popup")
-  );
+  // src/modal/app.tsx
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+  var rootElement = document.createElement("div");
+  rootElement.id = "spm";
+  document.body.appendChild(rootElement);
+  import_react_dom.default.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(modal_default, {}), document.getElementById("spm"));
 })();
 /*! Bundled license information:
 

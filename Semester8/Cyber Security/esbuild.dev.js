@@ -9,12 +9,19 @@ const config = {
 
 async function watch() {
   let modal_context = await esbuild.context({
-    entryPoints: ["./src/modal/app.tsx"],
-    outfile: "./build/bundle.js",
+    entryPoints: ["./src/modal/app.tsx", './src/style/global.css'],
+    outdir: './build',
+    plugins: [
+      postCssPlugin({
+        postcss: {
+          plugins: [require('tailwindcss'), require('autoprefixer')],
+        },
+      }),
+    ],
     ...config,
   });
   let popup_context = await esbuild.context({
-    entryPoints: ["./src/popup/app.tsx", './src/popup/style.css'],
+    entryPoints: ["./src/popup/app.tsx", './src/style/global.css'],
     outdir: './popup',
     plugins: [
       postCssPlugin({

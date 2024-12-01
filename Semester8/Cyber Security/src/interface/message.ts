@@ -1,1 +1,0 @@
-export interface IQuery { question?: string; answer?: string }

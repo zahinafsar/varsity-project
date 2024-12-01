@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../components/input";
-import Layout from "../components/layout";
+import Input from "../../components/input";
+import Layout from "../../components/layout";
 import { useStore } from "../context/store";
 
 const url = window.location.href;
