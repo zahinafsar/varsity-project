@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(async () => {
   chrome.contextMenus.create({
-    title: "Quint",
+    title: "SPM",
     id: "parent",
     contexts: ["all"],
   });

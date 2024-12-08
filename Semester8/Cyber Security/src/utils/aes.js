@@ -1,4 +1,4 @@
-// AES-128 Implementation
+
 const SBOX = [
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
     0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
@@ -18,7 +18,7 @@ const SBOX = [
     0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
 ];
 
-// Inverse S-box for decryption
+
 const INV_SBOX = [
     0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38, 0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
     0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87, 0x34, 0x8e, 0x43, 0x44, 0xc4, 0xde, 0xe9, 0xcb,
@@ -59,7 +59,7 @@ export class AES {
         this.expandKey(key);
     }
 
-    // String/bytes conversion methods
+
     stringToBytes(str) {
         const bytes = new Uint8Array(16);
         for (let i = 0; i < Math.min(str.length, 16); i++) {
@@ -71,7 +71,7 @@ export class AES {
     bytesToString(bytes) {
         let str = '';
         for (let i = 0; i < bytes.length; i++) {
-            if (bytes[i] !== 0) { // Stop at first zero byte (padding)
+            if (bytes[i] !== 0) {
                 str += String.fromCharCode(bytes[i]);
             }
         }
@@ -82,7 +82,7 @@ export class AES {
         return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // SubBytes Transformation
+
     subBytes(state) {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -92,7 +92,7 @@ export class AES {
         return state;
     }
 
-    // Inverse SubBytes Transformation
+
     invSubBytes(state) {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -102,7 +102,7 @@ export class AES {
         return state;
     }
 
-    // ShiftRows Transformation
+
     shiftRows(state) {
         const temp = [];
         for (let i = 0; i < 4; i++) {
@@ -117,7 +117,7 @@ export class AES {
         return state;
     }
 
-    // Inverse ShiftRows Transformation
+
     invShiftRows(state) {
         const temp = [];
         for (let i = 0; i < 4; i++) {
@@ -132,7 +132,7 @@ export class AES {
         return state;
     }
 
-    // MixColumns Transformation
+
     mixColumns(state) {
         for (let i = 0; i < 4; i++) {
             const a = state[0][i];
@@ -148,7 +148,7 @@ export class AES {
         return state;
     }
 
-    // Inverse MixColumns Transformation
+
     invMixColumns(state) {
         for (let i = 0; i < 4; i++) {
             const a = state[0][i];
@@ -164,7 +164,7 @@ export class AES {
         return state;
     }
 
-    // Galois Field multiplication
+
     gmul(a, b) {
         let p = 0;
         for (let i = 0; i < 8; i++) {
@@ -181,7 +181,7 @@ export class AES {
         return p & 0xff;
     }
 
-    // Add Round Key Transformation
+
     addRoundKey(state, roundKey) {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -191,21 +191,21 @@ export class AES {
         return state;
     }
 
-    // Key Expansion
+
     expandKey(key) {
         this.roundKeys = new Array(11);
         for (let i = 0; i < 11; i++) {
             this.roundKeys[i] = Array(4).fill().map(() => Array(4).fill(0));
         }
 
-        // First round key is the key itself
+
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 this.roundKeys[0][i][j] = key[i * 4 + j];
             }
         }
 
-        // Generate the rest of the round keys
+
         for (let round = 1; round < 11; round++) {
             for (let i = 0; i < 4; i++) {
                 let temp = this.roundKeys[round - 1][i].slice();
@@ -219,7 +219,7 @@ export class AES {
         }
     }
 
-    // Helper functions for Key Expansion
+
     rotWord(word) {
         const temp = word[0];
         for (let i = 0; i < 3; i++) {
@@ -244,25 +244,25 @@ export class AES {
         return result;
     }
 
-    // Encrypt a 16-byte block or string
+
     encrypt(input) {
         if (typeof input === 'string') {
             input = this.stringToBytes(input);
         }
 
         let state = Array(4).fill().map(() => Array(4).fill(0));
-        
-        // Convert input to state array
+
+
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 state[i][j] = input[i * 4 + j];
             }
         }
 
-        // Initial round
+
         state = this.addRoundKey(state, this.roundKeys[0]);
 
-        // Main rounds
+
         for (let round = 1; round < 10; round++) {
             state = this.subBytes(state);
             state = this.shiftRows(state);
@@ -270,12 +270,12 @@ export class AES {
             state = this.addRoundKey(state, this.roundKeys[round]);
         }
 
-        // Final round (no MixColumns)
+
         state = this.subBytes(state);
         state = this.shiftRows(state);
         state = this.addRoundKey(state, this.roundKeys[10]);
 
-        // Convert state array to output
+
         const output = new Uint8Array(16);
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -286,28 +286,28 @@ export class AES {
         return output;
     }
 
-    // Decrypt a 16-byte block or hex string
+
     decrypt(input) {
         if (typeof input === 'string') {
-            // Convert hex string to bytes
+
             input = new Uint8Array(input.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
         }
 
         let state = Array(4).fill().map(() => Array(4).fill(0));
-        
-        // Convert input to state array
+
+
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 state[i][j] = input[i * 4 + j];
             }
         }
 
-        // Initial round
+
         state = this.addRoundKey(state, this.roundKeys[10]);
         state = this.invShiftRows(state);
         state = this.invSubBytes(state);
 
-        // Main rounds
+
         for (let round = 9; round >= 1; round--) {
             state = this.addRoundKey(state, this.roundKeys[round]);
             state = this.invMixColumns(state);
@@ -315,10 +315,10 @@ export class AES {
             state = this.invSubBytes(state);
         }
 
-        // Final round
+
         state = this.addRoundKey(state, this.roundKeys[0]);
 
-        // Convert state array to output
+
         const output = new Uint8Array(16);
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {

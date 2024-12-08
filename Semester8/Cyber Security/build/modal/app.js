@@ -25118,7 +25118,6 @@
       }
       this.expandKey(key);
     }
-    // String/bytes conversion methods
     stringToBytes(str) {
       const bytes = new Uint8Array(16);
       for (let i = 0; i < Math.min(str.length, 16); i++) {
@@ -25138,7 +25137,6 @@
     bytesToHex(bytes) {
       return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
     }
-    // SubBytes Transformation
     subBytes(state) {
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -25147,7 +25145,6 @@
       }
       return state;
     }
-    // Inverse SubBytes Transformation
     invSubBytes(state) {
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -25156,7 +25153,6 @@
       }
       return state;
     }
-    // ShiftRows Transformation
     shiftRows(state) {
       const temp = [];
       for (let i = 0; i < 4; i++) {
@@ -25169,7 +25165,6 @@
       }
       return state;
     }
-    // Inverse ShiftRows Transformation
     invShiftRows(state) {
       const temp = [];
       for (let i = 0; i < 4; i++) {
@@ -25182,7 +25177,6 @@
       }
       return state;
     }
-    // MixColumns Transformation
     mixColumns(state) {
       for (let i = 0; i < 4; i++) {
         const a = state[0][i];
@@ -25196,7 +25190,6 @@
       }
       return state;
     }
-    // Inverse MixColumns Transformation
     invMixColumns(state) {
       for (let i = 0; i < 4; i++) {
         const a = state[0][i];
@@ -25210,7 +25203,6 @@
       }
       return state;
     }
-    // Galois Field multiplication
     gmul(a, b) {
       let p = 0;
       for (let i = 0; i < 8; i++) {
@@ -25226,7 +25218,6 @@
       }
       return p & 255;
     }
-    // Add Round Key Transformation
     addRoundKey(state, roundKey) {
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -25235,7 +25226,6 @@
       }
       return state;
     }
-    // Key Expansion
     expandKey(key) {
       this.roundKeys = new Array(11);
       for (let i = 0; i < 11; i++) {
@@ -25258,7 +25248,6 @@
         }
       }
     }
-    // Helper functions for Key Expansion
     rotWord(word) {
       const temp = word[0];
       for (let i = 0; i < 3; i++) {
@@ -25280,7 +25269,6 @@
       }
       return result;
     }
-    // Encrypt a 16-byte block or string
     encrypt(input) {
       if (typeof input === "string") {
         input = this.stringToBytes(input);
@@ -25309,7 +25297,6 @@
       }
       return output;
     }
-    // Decrypt a 16-byte block or hex string
     decrypt(input) {
       if (typeof input === "string") {
         input = new Uint8Array(input.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)));

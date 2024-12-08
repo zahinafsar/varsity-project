@@ -784,7 +784,7 @@
             }
             return children;
           }
-          function createContext2(defaultValue) {
+          function createContext(defaultValue) {
             var context = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1070,7 +1070,7 @@
             }
             return dispatcher;
           }
-          function useContext2(Context) {
+          function useContext(Context) {
             var dispatcher = resolveDispatcher();
             {
               if (Context._context !== void 0) {
@@ -1084,7 +1084,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState3(initialState) {
+          function useState(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect2(create, deps) {
+          function useEffect(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1865,7 +1865,7 @@
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.act = act;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext2;
+          exports.createContext = createContext;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1876,10 +1876,10 @@
           exports.startTransition = startTransition;
           exports.unstable_act = act;
           exports.useCallback = useCallback;
-          exports.useContext = useContext2;
+          exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect2;
+          exports.useEffect = useEffect;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo;
           exports.useReducer = useReducer;
           exports.useRef = useRef;
-          exports.useState = useState3;
+          exports.useState = useState;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -3046,11 +3046,11 @@
           });
           var isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\n\t]*a[\r\n\t]*s[\r\n\t]*c[\r\n\t]*r[\r\n\t]*i[\r\n\t]*p[\r\n\t]*t[\r\n\t]*\:/i;
           var didWarn = false;
-          function sanitizeURL(url2) {
+          function sanitizeURL(url) {
             {
-              if (!didWarn && isJavaScriptProtocol.test(url2)) {
+              if (!didWarn && isJavaScriptProtocol.test(url)) {
                 didWarn = true;
-                error("A future version of React will block javascript: URLs as a security precaution. Use event handlers instead if you can. If you need to generate unsafe HTML try using dangerouslySetInnerHTML instead. React was passed %s.", JSON.stringify(url2));
+                error("A future version of React will block javascript: URLs as a security precaution. Use event handlers instead if you can. If you need to generate unsafe HTML try using dangerouslySetInnerHTML instead. React was passed %s.", JSON.stringify(url));
               }
             }
           }
@@ -24433,11 +24433,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx9 = jsxWithValidationDynamic;
-          var jsxs5 = jsxWithValidationStatic;
+          var jsx3 = jsxWithValidationDynamic;
+          var jsxs = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx9;
-          exports.jsxs = jsxs5;
+          exports.jsx = jsx3;
+          exports.jsxs = jsxs;
         })();
       }
     }
@@ -24458,39 +24458,6 @@
   // src/popup/app.tsx
   var import_react_dom = __toESM(require_react_dom());
 
-  // src/popup/context/store.tsx
-  var import_react2 = __toESM(require_react());
-
-  // src/popup/pages/add.tsx
-  var import_react = __toESM(require_react());
-
-  // src/components/input.tsx
-  var import_jsx_runtime = __toESM(require_jsx_runtime());
-  function Input({
-    label,
-    onChange,
-    placeholder,
-    type,
-    value,
-    className,
-    ...props
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "block text-gray-500 text-sm font-bold mb-1", children: label }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-        "input",
-        {
-          className: "rounded text-sm w-full py-2 px-2 bg-neutral-900",
-          type,
-          placeholder,
-          value,
-          onChange,
-          ...props
-        }
-      )
-    ] });
-  }
-
   // src/theme/index.ts
   var theme = {
     primary: "#353740",
@@ -24499,235 +24466,16 @@
   };
 
   // src/components/layout.tsx
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime = __toESM(require_jsx_runtime());
   var Layout = ({ children }) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { backgroundColor: theme.primary }, className: "w-[300px] dark:text-primary", children });
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { backgroundColor: theme.primary }, className: "w-[300px] dark:text-primary", children });
   };
   var layout_default = Layout;
 
-  // src/popup/pages/add.tsx
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime());
-  var url = window.location.href;
-  function Add() {
-    const { navigate, addPassword } = useStore();
-    const [password, setPassword] = (0, import_react.useState)({
-      password: "",
-      url
-    });
-    const handlePassword = (e) => {
-      setPassword({
-        ...password,
-        [e.target.name]: e.target.value
-      });
-    };
-    const home = () => navigate((r) => r.home);
-    const save = () => {
-      addPassword({
-        password: password.password,
-        url: password.url
-      });
-      home();
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "SPM" }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { onClick: home, className: "text-xs text-blue-500 cursor-pointer", children: "Home" }),
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { onClick: save, className: "text-xs text-green-500 cursor-pointer", children: "Save" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3 w-full flex flex-col gap-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-          Input,
-          {
-            onChange: handlePassword,
-            defaultValue: url,
-            name: "url",
-            label: "Url"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-          Input,
-          {
-            onChange: handlePassword,
-            name: "password",
-            label: "Password",
-            type: "password"
-          }
-        )
-      ] })
-    ] }) });
-  }
-  var add_default = Add;
-
-  // src/popup/pages/home.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  function Home() {
-    const { navigate, setMasterKey, passwords, removePassword } = useStore();
-    const add = () => navigate((r) => r.add);
-    const logout = () => {
-      setMasterKey("");
-      navigate((r) => r.lock);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "SPM" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex items-center gap-3", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { onClick: add, className: "text-xs text-green-500 cursor-pointer", children: "Add" }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { onClick: logout, className: "text-xs text-red-400 cursor-pointer", children: "Logout" })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "divide-y divide-gray-500 w-full max-h-[300px] overflow-auto", children: passwords.length ? passwords.map((password, index) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-          "div",
-          {
-            className: "flex justify-between items-center px-3 py-3",
-            children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "w-full", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex justify-between items-center", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-xs max-w-[70%] truncate", children: password.url }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                  "p",
-                  {
-                    className: "text-xs text-red-400 cursor-pointer",
-                    onClick: () => {
-                      removePassword(password.id);
-                    },
-                    children: "Delete"
-                  }
-                ) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Input, { type: "password", value: password.password })
-            ] })
-          },
-          index
-        );
-      }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "py-10 px-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "w-full text-center", children: "No passwords saved" }) }) })
-    ] }) });
-  }
-  var home_default = Home;
-
-  // src/popup/pages/lock.tsx
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-  function Lock() {
-    const { masterKey, setMasterKey, navigate } = useStore();
-    const onKeyPress = (e) => {
-      if (e.key === "Enter") {
-        navigate(routes.home);
-      }
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex flex-col justify-center items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "w-full border-b border-gray-500 py-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "Secure Password Manager" }),
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-center text-xs text-gray-400", children: "Keep your passwords safe and secure" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "p-3 w-full", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-        Input,
-        {
-          onKeyDown: onKeyPress,
-          value: masterKey,
-          label: "Master Key",
-          type: "password",
-          onChange: (v) => {
-            setMasterKey(v.target.value);
-          }
-        }
-      ) })
-    ] }) });
-  }
-  var lock_default = Lock;
-
-  // src/router.tsx
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime());
-  var routes = {
-    home: "home",
-    lock: "lock",
-    add: "add"
-  };
-  var Router = ({}) => {
-    const { route } = useStore();
-    if (route === routes.lock) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(lock_default, {});
-    if (route === routes.home) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(home_default, {});
-    if (route === routes.add) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(add_default, {});
-    else return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: "Not found" });
-  };
-  var router_default = Router;
-
-  // node_modules/nanoid/url-alphabet/index.js
-  var urlAlphabet = "useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";
-
-  // node_modules/nanoid/index.browser.js
-  var nanoid = (size = 21) => {
-    let id = "";
-    let bytes = crypto.getRandomValues(new Uint8Array(size));
-    while (size--) {
-      id += urlAlphabet[bytes[size] & 63];
-    }
-    return id;
-  };
-
-  // src/popup/context/store.tsx
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime());
-  var Store = (0, import_react2.createContext)({
-    route: "",
-    navigate: () => {
-    },
-    masterKey: "",
-    setMasterKey: () => {
-    }
-  });
-  var StoreProvider = ({ children }) => {
-    const [route, setRoute] = (0, import_react2.useState)(routes.lock);
-    const [masterKey, setMasterKey] = (0, import_react2.useState)("");
-    const [passwords, setPasswords] = (0, import_react2.useState)([]);
-    (0, import_react2.useEffect)(() => {
-      const passwordsString = localStorage.getItem("passwords");
-      if (passwordsString) {
-        const passwords2 = JSON.parse(passwordsString);
-        setPasswords(passwords2);
-      }
-    }, []);
-    const navigate = (update) => {
-      if (typeof update === "function") {
-        setRoute(update(routes));
-      } else {
-        setRoute(update);
-      }
-    };
-    const addPassword = (p) => {
-      const password = { ...p, id: nanoid() };
-      const passwordArray = [...passwords, password];
-      setPasswords(passwordArray);
-      const passwordsString = JSON.stringify(passwordArray);
-      localStorage.setItem("passwords", passwordsString);
-    };
-    const removePassword = (id) => {
-      const passwordArray = passwords.filter((p) => p.id !== id);
-      setPasswords(passwordArray);
-      const passwordsString = JSON.stringify(passwordArray);
-      localStorage.setItem("passwords", passwordsString);
-    };
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-      Store.Provider,
-      {
-        value: {
-          route,
-          navigate,
-          masterKey,
-          setMasterKey,
-          passwords,
-          addPassword,
-          removePassword
-        },
-        children
-      }
-    );
-  };
-  var useStore = () => (0, import_react2.useContext)(Store);
-
   // src/popup/app.tsx
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime());
   import_react_dom.default.render(
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(StoreProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(router_default, {}) }),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(layout_default, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col justify-center items-center", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-full border-b border-gray-500 px-3 py-2 flex items-center justify-between", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-xl font-bold text-center mb-1", children: "Welcome to Secure Password Manager" }) }) }) }),
     document.getElementById("spm-popup")
   );
 })();
